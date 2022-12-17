@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\main_route_handler;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [main_route_handler::class,'index']);
