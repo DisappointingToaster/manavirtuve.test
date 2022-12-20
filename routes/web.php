@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [main_route_handler::class,'index']);
+Route::get('/search');
+Route::get('/profile');
+Route::get('/kitchen');
