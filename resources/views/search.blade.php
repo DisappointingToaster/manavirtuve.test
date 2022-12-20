@@ -6,7 +6,7 @@
 <div>
     <div>
         <div name='search_box'>
-
+            <h1>Search</h1>
         </div>
     </div>
     <div>

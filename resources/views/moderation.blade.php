@@ -6,7 +6,7 @@
 <div>
     <div>
         <div name='search_box'>
-
+            <h1>Moderation</h1>
         </div>
     </div>
     <div>
