@@ -5,19 +5,27 @@
     padding: 0;
     
 }
+body{
+    width: 100%;
+}
 nav {
     font-family: "Nunito",sans-serif;
+    display: flex;
     font-weight: 500;
     font-size: 16px;
     color: #edf0f1;
     text-decoration: none;
+    justify-content: space-between;
+    flex-direction: row;
+}
+nav h2{
+    float: left;
 }
 .navigation{
     background-color: #20ac53;
-    display: flex;
     justify-content: space-between;
     align-items: top;
-    flex-direction: row-reverse;
+    
     padding: 20px;
 }
 .nav_items{
@@ -37,4 +45,53 @@ nav {
     color: black;
     
 }
-
+/* homepage infocard  */
+.promoted_recipes{
+    width: 100%;
+    height: 450px;
+    margin-top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.promoted_card{
+    height: 450px;
+    width: 300px;
+    overflow:hidden;
+    position: relative;
+    border-radius: 25px;
+    transition: 0.5s;
+}
+.promoted_card img{
+    object-fit:cover;
+    height: 450px;
+    width: 300px;
+    opacity: 80%;
+    z-index: -1;
+}
+.card_back{
+    justify-content:center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.card_front h2{
+    z-index: 10;
+    width: 80%;
+    margin-top: 15px;
+}
+.card_front{
+    z-index: 1;
+    justify-content: center;
+    position: absolute;
+    background-color: #20ac53;
+    border-radius: 25px;
+    height: 30%;
+    width: 100%;
+    bottom: 0;
+    padding: 0 7%;
+    transition: 0.5s;
+}
+.promoted_card:hover{
+    transform: scale(1.15);
+}
