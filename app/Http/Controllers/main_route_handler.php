@@ -19,5 +19,11 @@ class main_route_handler extends Controller
     public function search(){
         return view('search');
     }
+    public function recipes(){
+        return view('recipes');
+    }
+    public function fridge(){
+        return view('fridge');
+    }
 
 }

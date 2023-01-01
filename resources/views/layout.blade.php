@@ -6,30 +6,24 @@
 
         <title>Mana Virtuve</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        
 
         <!-- Styles -->
-        <style>
-        </style>
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-        </style>
+        
+        <link rel="stylesheet" href="{{URL::asset('css/main.css') }}" />
+
+        
     </head>
     <body class="antialiased">
-        <div>
-            <nav >
-        
-            <ul name="nav-items"style="display: inline;">
-                <li ><a href="#">Home</a></li>
-                <li ><a href="#">Recipes</a></li>
-                <li ><a href="#">Fridge</a></li>
-                <li ><a href="#">My Kitchen</a></li>
-                <li ><a href="#">Profile</a></li>
-            </ul>
-        
+        <div class="navigation">
+            <nav>
+                <ul class="nav_items">
+                    <li ><a href="/">Home</a></li>
+                    <li ><a href="/recipes">Recipes</a></li>
+                    <li ><a href="/fridge">Fridge</a></li>
+                    <li ><a href="/kitchen">My Kitchen</a></li>
+                    <li ><a href="/profile">Profile</a></li>
+                </ul>
         </nav>  
     </div>
         <main>
