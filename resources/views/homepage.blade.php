@@ -32,52 +32,39 @@
             </div>
             <div class='card_front'>
                 <h2>Promoted recipe 3</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, vitae incidunt similique ipsa necessitatibus repudiandae placeat alias possimus libero qui rerum unde mollitia facilis. Aperiam doloribus fugit tempore laudantium facilis!</p>
+                <p>Test text 12355677</p>
             </div>
         </div>
     </div>
 
-    <div class='recently_viewed'>
-        <ul>
-            <li>
-                Recently viewed recipe 1
-            </li>
-            <li>
-                Recently viewed recipe 2
-            </li>
-            <li>
-                Recently viewed recipe 3
-            </li>
-        </ul>
+    <div class='recently_viewed_container'>
+        @for($i=0;$i<10;$i++)
+        <div class='recently_viewed_frame'> 
+            <img src="{{URL('images/missing.jpg')}}">
+            <h5>Recently viewed recipe</h5>
+        </div>
+        @endfor
     </div>
     
-    <div name='recipe_listings'>
-        <div name='popular_recipes'>
-            <ul>
-                <li>
-                    Popular recipe 1
-                </li>
-                <li>
-                    Popular recipe 2
-                </li>
-                <li>
-                    Popular recipe 3
-                </li>
-            </ul>
+    <div class='recipe_listings'>
+            <div class='popular_recipes'>
+                @for($i=0;$i<5;$i++)
+                <div class='listing_card'>
+                    <img src="{{URL('images/missing.jpg')}}">
+                    <h3>Popular recipe</h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde laborum consequatur tempora id, praesentium reprehenderit quasi quidem maiores nobis nihil earum numquam voluptatibus est perspiciatis laudantium animi quod at neque?</p>
+                </div>
+            @endfor
         </div>
-        <div name='new_recipes'>
-            <ul>
-                <li>
-                    New recipe 1
-                </li>
-                <li>
-                    New recipe 2
-                </li>
-                <li>
-                    New recipe 3
-                </li>
 
-            </ul>
+        <div class='new_recipes'>
+            @for($i=0;$i<5;$i++)
+                <div class='listing_card'>
+                    <img src="{{URL('images/missing.jpg')}}">
+                    <h3>New recipe</h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde laborum consequatur tempora id, praesentium reprehenderit quasi quidem maiores nobis nihil earum numquam voluptatibus est perspiciatis laudantium animi quod at neque?</p>
+                </div>
+                @endfor
         </div>
     </div>
 </div>
