@@ -183,4 +183,53 @@ nav h2{
 .filter_list ul{
     list-style-type: none;
 }
-
+.nav_items .moderation_link{
+    background-color: rgb(186, 68, 68);
+    border-color: rgb(186, 68, 68);
+}
+.profile_container{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 3%;
+}
+.profile_display{
+    flex:2;
+    background-color: #b0b4b6;
+    margin-right: 8%;
+    height: 300px;
+}
+.profile_categories{
+    flex:1;
+    max-width: 15%;
+    margin-left: 8%;
+}
+.profile_categories ul{
+    list-style: none;
+    border-color: #7a7e80;
+    border-style: solid;
+    font-size: xx-large;
+}
+.profile_categories a{
+    text-decoration: none;
+}
+.profile_categories li{
+    border-radius: 0px;
+    border-color: #b0b4b6;
+    border-style: solid;
+    padding-left: 20px;
+    background-color: #b0b4b6;
+    margin-bottom: 5px;
+}
+a.button{
+    border-radius: 15px;
+    border-color: #20ac53;
+    border-style: solid;
+    background-color: #20ac53;
+    font-size: xx-large;
+    text-decoration: none;
+    color:white;  
+    margin-left: 10%; 
+}
+.new_recipe_button{
+    margin: 20px    ;
+}

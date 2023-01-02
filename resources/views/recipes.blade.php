@@ -16,16 +16,26 @@
 
 
         <div name='filter_list'>
-            <ul>
-                @foreach($ingredients as $ingredient)
+                @php
+                    $type=$ingredients->first()['ingredient_type'];
+                @endphp
+            <span>{{$type}}</span>
+            @foreach($ingredients as $ingredient)
+            @if($ingredient['ingredient_type']!=$type)
+                @php
+                    $type=$ingredient['ingredient_type']
+                @endphp
+                <span>{{$type}}</span>
+            @endif
+            <ul> 
                 <li>
                     <div>
                         <input type="checkbox" value="{{$ingredient['ingredient_name']}}">
                         <span> {{$ingredient['ingredient_name']}}</span>
                     </div>
                 </li>
-                @endforeach
             </ul>
+            @endforeach
         </div>
     </div>
     

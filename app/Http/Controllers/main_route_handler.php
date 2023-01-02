@@ -14,11 +14,16 @@ class main_route_handler extends Controller
         
     }
     public function profile(){
-        return view('userPage');
+        return view('userInfo');
+    }
+    public function profileSecurity(){
+        return view('userSecurity');
     }
     
     public function fridge(){
         return view('fridge');
     }
-
+    public function moderation(){
+        return view('moderation');
+    }
 }

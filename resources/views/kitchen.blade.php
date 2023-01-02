@@ -4,23 +4,22 @@
 @section('content')
 
 <div>
-    <div>
-        <div name='search_box'>
-            <form role="search">
-                <div class="input-group">
-                    <input type="search" placeholder="Search your recipe" class=""/>
-                    <button class="submit-button" type="submit">Submit</button>
+    <div class="new_recipe_button">    
+        <a href="/kitchen/new" class="button">Add new recipe</a>
+    </div>
+        
+        <div class='display_box_container'>
+            
+            @for($i=0;$i<9;$i++)
+            
+                <div class='diplay_box'>
+                    <img src="{{URL('images/missing.jpg')}}">
+                    <a href='#'>Recipe name</a>
+                    <span>Egg, Salt, Bacon</span>
+                    <span>Lorem ipsum dolor sit amet, </span>
                 </div>
-            </form>
+             @endfor
         </div>
-    </div>
-    <div>
-        <div name='filter_list'>
-
-        </div>
-        <div name='diplay_box'>
-
-        </div>
-    </div>
+        
 </div>
 @endsection

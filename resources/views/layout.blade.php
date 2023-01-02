@@ -25,10 +25,11 @@
                     <li ><a href="/recipes">Recipes</a></li>
                     <li ><a href="/fridge">Fridge</a></li>
                     <li ><a href="/kitchen">My Kitchen</a></li>
-                    <li ><a href="/profile">Profile</a></li>
+                    <li class="moderation_link"><a href="/moderation">Moderation</a></li>
+                    <li ><a href="/profile/info">Profile</a></li>
                 </ul>
-        </nav>  
-    </div>
+            </nav>  
+        </div>
         <main>
             @yield('content')
 
