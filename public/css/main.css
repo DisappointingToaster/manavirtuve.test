@@ -150,3 +150,34 @@ nav h2{
     align-items: center;
     margin-bottom: 20px;
 }
+.recipe_browser{
+    display: flex;
+    justify-content: space-between;
+    
+    gap:20px;
+    margin: 0 5%;
+    margin-top: 20px;
+}
+.display_box_container{
+    min-width: 300px;
+    background-color: #b0b4b6;
+    flex:1.5;
+    min-height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.search_box{
+    display: flex;
+    flex-direction: column;
+}
+.diplay_box{
+    padding:20px;
+    background-color:#20ac53;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 10px;
+    
+}
+
