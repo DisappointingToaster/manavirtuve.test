@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recipe', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('name');
-            $table->longText('description');
+            $table->string('ingredient_name')->unique();
+            $table->string('ingredient_type');
             
-        });
+        }); 
     }
 
     /**
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe');
+        Schema::dropIfExists('ingredients');
     }
 };

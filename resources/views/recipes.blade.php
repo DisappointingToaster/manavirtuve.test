@@ -17,36 +17,32 @@
 
         <div name='filter_list'>
             <ul>
+                @foreach($ingredients as $ingredient)
                 <li>
                     <div>
-                        <input type="checkbox" value="egg">
-                        <span> Egg</span>
+                        <input type="checkbox" value="{{$ingredient['ingredient_name']}}">
+                        <span> {{$ingredient['ingredient_name']}}</span>
                     </div>
                 </li>
-                <li>
-                    <div>
-                        <input type="checkbox" value="bread">
-                        <span> Bread</span>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <input type="checkbox" value="bacon">
-                        <span> Bacon</span>
-                    </div>
-                </li>
+                @endforeach
             </ul>
         </div>
     </div>
+    
     <div class='display_box_container'>
-        @for($i=0;$i<9;$i++)
-        <div class='diplay_box'>
-            <img src="{{URL('images/missing.jpg')}}">
-            <span>Recipe Name</span>
-            <span>Egg, Salt, Bacon</span>
-            <span>Lorem ipsum dolor sit amet, </span>
-        </div>
+        
+            @for($i=0;$i<9;$i++)
+            
+                <div class='diplay_box'>
+                    <img src="{{URL('images/missing.jpg')}}">
+                    <a href='#'>Recipe name</a>
+                    <span>Egg, Salt, Bacon</span>
+                    <span>Lorem ipsum dolor sit amet, </span>
+                </div>
+            
         @endfor
+        
     </div>
+
 </div>
 @endsection
