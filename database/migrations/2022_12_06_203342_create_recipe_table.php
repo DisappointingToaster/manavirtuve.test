@@ -18,6 +18,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->longText('description');
+            //$table->string('image');
+            //$table->integer('views');
+            //$table->integer('user');
+            //$table->boolean('flagged')
             
         });
     }
