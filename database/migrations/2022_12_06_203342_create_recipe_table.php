@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->longText('description');
+            $table->longText('tags');
             //$table->string('image');
             //$table->integer('views');
             //$table->integer('user');
