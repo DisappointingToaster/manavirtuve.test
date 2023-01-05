@@ -10,9 +10,9 @@
         
         <div class='display_box_container'>
             
-            @for($i=0;$i<9;$i++)
+            @for($i=0;$i<20;$i++)
             
-                <div class='diplay_box'>
+                <div class='diplay_box_2'>
                     <img src="{{URL('images/missing.jpg')}}">
                     <a href='#'>Recipe name</a>
                     <span>Egg, Salt, Bacon</span>

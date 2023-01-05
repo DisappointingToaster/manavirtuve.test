@@ -47,7 +47,7 @@
             <span>No ingredients to display</span>
         </div>
     @endif
-</div>
+
     <div class='display_box_container'>
         
             @for($i=0;$i<9;$i++)
@@ -59,7 +59,7 @@
                     <span>Lorem ipsum dolor sit amet, </span>
                 </div>
             
-        @endfor
+            @endfor
         
     </div>
 
