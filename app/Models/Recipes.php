@@ -11,7 +11,7 @@ class Recipes extends Model
     protected $table = 'recipe';
     protected $primaryKey = 'id';
     protected $fillable =[
-        'name','tags','description'
+        'name','tags','description','image_path'
     ];
     protected $attributes = array(
         'favourites' => 0,

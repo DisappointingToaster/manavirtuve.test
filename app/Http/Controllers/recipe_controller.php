@@ -23,10 +23,26 @@ class recipe_controller extends Controller
         ]);
     }
     public function createRecipe(Request $request){
+        
+        $test=$request->file('recipe_image');
+
+        $request->validate([
+            'recipe_name'=>'required|max:255',
+            'tags'=>'nullable',
+            'recipe_description'=>'required|max:4000',
+            'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
+        ]);
+        
+        $recipeImageName = time().'-'.$request->recipe_name.'.'. 
+        $request->recipe_image->extension();
+        
+        $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
+        
         $recipe= Recipes::create([
             'name'=>$request->input('recipe_name'),
             'tags'=>$request->input('tags'),
-            'description'=>$request->input('recipe_description')
+            'description'=>$request->input('recipe_description'),
+            'image_path'=>$recipeImageName
         ]);
         return redirect('/kitchen');
     }

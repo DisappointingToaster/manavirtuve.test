@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->longText('description');
-            $table->longText('tags');
-            //$table->string('image');
+            $table->longText('tags')->nullable();
+            $table->string('image_path')->nullable();
             $table->integer('favourites');
             //$table->integer('user');
             //$table->boolean('flagged')
