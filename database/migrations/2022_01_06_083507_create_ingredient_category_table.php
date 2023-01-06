@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ingredients', function (Blueprint $table) {
+        Schema::create('ingredient_category', function (Blueprint $table) {
             $table->id();
-            $table->string('ingredient_name')->unique();
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('ingredient_category');
             $table->timestamps();
-        }); 
+            $table->string('category_name')->unique();
+        });
     }
 
     /**
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingredients');
+        Schema::dropIfExists('ingredient_category');
     }
 };

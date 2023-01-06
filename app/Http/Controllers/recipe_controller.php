@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient_Categories;
 use App\Models\Recipes;
 use App\Models\Ingredients;
 use Illuminate\Http\Request;
@@ -9,12 +10,11 @@ use Illuminate\Http\Request;
 class recipe_controller extends Controller
 {
     public function recipes(){
-        $ingredients=Ingredients::all()->sortBy('ingredient_type');
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::all();
         return view('recipes.recipes',[
-            'ingredients'=>$ingredients,
             'recipes'=>$recipes,
-        ]);
+        ])->with('ingredient_categories',$ingredient_categories,);
         
     }
     public function showSingleRecipe(Recipes $recipe){

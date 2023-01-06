@@ -9,5 +9,9 @@ class Ingredients extends Model
 {
     use HasFactory;
     protected $table = 'ingredients';
-    public $timestamps = false;
+    protected $primaryKey='id';
+    public $timestamps = true;
+    public function ingredient_category(){
+        return $this->belongsTo(Ingredient_Categories::class,'category_id');
+    }
 }

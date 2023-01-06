@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ingredient_Categories;
 use App\Models\Ingredients;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,30 +16,52 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         // \App\Models\User::factory(10)->create();
+        Ingredient_Categories::create([
+            'category_name'=>'Meat'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Fruit'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Liquid'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Egg'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Grain'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Complimentary'
+        ]);
+        Ingredient_Categories::create([
+            'category_name'=>'Beverage'
+        ]);
         Ingredients::create([
             'ingredient_name'=>'egg',
-            'ingredient_type'=>'fridge'
+            'category_id'=>4
         ]);
         Ingredients::create([
             'ingredient_name'=>'bacon',
-            'ingredient_type'=>'meat'
+            'category_id'=>1
         ]);
         Ingredients::create([
             'ingredient_name'=>'bread',
-            'ingredient_type'=>'wheat'
+            'category_id'=>5
         ]);
         Ingredients::create([
             'ingredient_name'=>'sausage',
-            'ingredient_type'=>'meat'
+            'category_id'=>4
         ]);
         Ingredients::create([
             'ingredient_name'=>'water',
-            'ingredient_type'=>'liquid'
+            'category_id'=>7
         ]);
         Ingredients::create([
             'ingredient_name'=>'salt',
-            'ingredient_type'=>'additive'
+            'category_id'=>6
         ]);
     }
 }

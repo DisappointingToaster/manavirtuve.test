@@ -13,41 +13,22 @@
                 </div>
             </form>
         </div>
-        @if(count($ingredients)!=0)
+        @if(count($ingredient_categories)!=0)
         <div class="filter_list">
-                @php
-                    $type=$ingredients->first()['ingredient_type'];
-                    $printed=false;
-                @endphp
-                    @foreach($ingredients as $ingredient)
-                    <div class="category_list">
-                    @if($ingredient['ingredient_type']!=$type)
-                        @php
-                            $printed=false;
-                            $type=$ingredient['ingredient_type']
-                        @endphp
-                    @endif
-                    @if($printed==false)
-                        <span>{{$type}}</span>
-                        @php
-                            $printed=true;
-                        @endphp
-                    @endif
+            @forelse ($ingredient_categories as $category)
+                <h5>{{$category->category_name}}</h5>
+                <ul> 
+                @forelse ($category->ingredients as $ingredients)
+                    {{$ingredients->ingredient_name}}
+                @empty
                     
-                    <ul> 
-                        <li>
-                            <div>
-                                
-                                <input type="checkbox" value="{{$ingredient['ingredient_name']}}">
-                                <span> {{$ingredient['ingredient_name']}}</span>
-                                
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                    @endforeach
-                    
-                </div>
+                @endforelse
+                </ul>
+            @empty
+                <h5>No ingredients to display</h5>
+            @endforelse    
+            
+            </div>
         
     </div>
 
