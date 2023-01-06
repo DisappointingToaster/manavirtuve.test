@@ -4,7 +4,7 @@
 @section('content')
 
 <div class='single_recipe_display_container'>
-        <button>Edit recipe</button>
+        <a href="/recipes/{{$recipe->id}}/edit">Edit recipe</a>
         <button>Favourite</button>
         <div class='single_recipe'>
                 <img src="{{URL('images/missing.jpg')}}">

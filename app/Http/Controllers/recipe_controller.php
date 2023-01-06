@@ -63,5 +63,9 @@ class recipe_controller extends Controller
         ]);
         return redirect('/moderation/editFilters');
     }
-
+    public function editRecipe(Recipes $recipe){
+        return view('recipes.editRecipe',[
+            'recipe'=>$recipe
+        ]);
+    }
 }
