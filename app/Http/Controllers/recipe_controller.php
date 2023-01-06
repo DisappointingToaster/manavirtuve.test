@@ -23,27 +23,30 @@ class recipe_controller extends Controller
         ]);
     }
     public function createRecipe(Request $request){
-        
-        $test=$request->file('recipe_image');
-
         $request->validate([
             'recipe_name'=>'required|max:255',
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
         ]);
-        
+        if($request->recipe_image!=null){
         $recipeImageName = time().'-'.$request->recipe_name.'.'. 
         $request->recipe_image->extension();
-        
         $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
-        
         $recipe= Recipes::create([
             'name'=>$request->input('recipe_name'),
             'tags'=>$request->input('tags'),
             'description'=>$request->input('recipe_description'),
             'image_path'=>$recipeImageName
         ]);
+    }else{
+        $recipe= Recipes::create([
+            'name'=>$request->input('recipe_name'),
+            'tags'=>$request->input('tags'),
+            'description'=>$request->input('recipe_description'),
+        ]);
+    }
+        
         return redirect('/kitchen');
     }
     public function modifyFilters(){
@@ -67,5 +70,32 @@ class recipe_controller extends Controller
         return view('recipes.editRecipe',[
             'recipe'=>$recipe
         ]);
+    }
+    public function updateRecipe(Recipes $recipe, Request $request){
+        $request->validate([
+            'recipe_name'=>'required|max:255',
+            'tags'=>'nullable',
+            'recipe_description'=>'required|max:4000',
+            'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
+        ]);
+        if($request->recipe_image!=null){
+        $recipeImageName = time().'-'.$request->recipe_name.'.'. 
+        $request->recipe_image->extension();
+        $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
+        $recipe->update([
+            'name'=>$request->input('recipe_name'),
+            'tags'=>$request->input('tags'),
+            'description'=>$request->input('recipe_description'),
+            'image_path'=>$recipeImageName
+        ]);
+        }else{
+            $recipe->update([
+                'name'=>$request->input('recipe_name'),
+                'tags'=>$request->input('tags'),
+                'description'=>$request->input('recipe_description'),
+            ]);
+        };
+        
+        return back();
     }
 }

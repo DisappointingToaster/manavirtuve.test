@@ -6,13 +6,14 @@
 <div class='single_recipe_display_container'>
         
         <div class='add_recipe'>
-                <form action="/recipes" method="POST" enctype="multipart/form-data">
+                <form action="/recipes/{{$recipe->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT');
                         <div>
-                                <input type="text" name="recipe_name" placeholder="Your recipe name">
-                                <input type="text" name="tags" placeholder="Your recipe tags">
-                                <textarea name="recipe_description"></textarea>
-                                <input type="file" name="recipe_image">
+                                <input type="text" name="recipe_name" placeholder="Your recipe name" value="{{$recipe->name}}">
+                                <input type="text" name="tags" placeholder="Your recipe tags" value="{{$recipe->tags}}">
+                                <textarea name="recipe_description">{{$recipe->description}}</textarea>
+                                <input type="file" name="recipe_image" value="{{$recipe->image_path}}">
                                 <button name="submit" type="submit">Submit</button>
                         </div>
                 </form>

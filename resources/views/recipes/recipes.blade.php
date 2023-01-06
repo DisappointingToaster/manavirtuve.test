@@ -46,11 +46,8 @@
             @forelse($recipes as $recipe)
             
                 <div class='diplay_box'>
-                    @if($recipe->image_path!="null")
-                    <img src="{{asset('images/recipes/'.$recipe->image_path)}}">
-                    @else
-                    <img src="{{URL('images/missing.jpg')}}">
-                    @endif
+                
+                    <img src="{{$recipe->image_path ? asset('images/recipes/'.$recipe->image_path) : asset('images/missing.jpg') }} ">
                     <a href="/recipes/{{$recipe->id}}">{{$recipe->name}}</a>
                     <span>{{$recipe->tags}}</span>
                     <span>{{$recipe->description}}</span>
