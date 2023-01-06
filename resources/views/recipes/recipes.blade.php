@@ -17,11 +17,14 @@
         <div class="filter_list">
             @forelse ($ingredient_categories as $category)
                 <h5>{{$category->category_name}}</h5>
-                <ul> 
-                @forelse ($category->ingredients as $ingredients)
-                    {{$ingredients->ingredient_name}}
-                @empty
-                    
+                <ul>
+                     @forelse ($category->ingredients as $ingredients)
+                    <li>
+                        <input type="checkbox" value="{{$ingredients->ingredient_name}}">
+                        <span>{{$ingredients->ingredient_name}}</span>
+                    </li>
+                    @empty
+                    <p>No ingredients available</p>
                 @endforelse
                 </ul>
             @empty

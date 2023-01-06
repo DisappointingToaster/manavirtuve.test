@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\main_route_handler;
+use App\Http\Controllers\moderation_controller;
 use App\Http\Controllers\recipe_controller;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,5 @@ Route::get('/moderation',[main_route_handler::class,'moderation']);
 Route::get('/recipes/{recipe}',[recipe_controller::class,'showSingleRecipe']);
 Route::get('/kitchen/new',[main_route_handler::class,'addRecipe']);
 Route::post('/recipes',[recipe_controller::class,'createRecipe']);
+Route::get('/moderation/editFilters',[recipe_controller::class,'modifyFilters']);
+Route::post('/moderation/newCategory',[recipe_controller::class,'createCategory']);

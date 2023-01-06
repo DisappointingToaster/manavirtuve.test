@@ -30,7 +30,7 @@ class main_route_handler extends Controller
         return view('fridge');
     }
     public function moderation(){
-        return view('moderation');
+        return view('moderation.moderation');
     }
     public function addRecipe(){
         return view('recipes.addRecipe');

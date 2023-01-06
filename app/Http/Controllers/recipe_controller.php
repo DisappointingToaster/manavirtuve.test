@@ -30,4 +30,14 @@ class recipe_controller extends Controller
         ]);
         return redirect('/kitchen');
     }
+    public function modifyFilters(){
+        return view('moderation.modifyFilters');
+    }
+    public function createCategory(Request $request){
+        $category=Ingredient_Categories::create([
+        'category_name'=>$request->input('category_name')
+        ]);
+        return redirect('/moderation/editFilters');
+    }
+
 }

@@ -259,3 +259,8 @@ a.button{
     margin: 10px;
     border-radius: 10px;
 }
+.moderation_container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

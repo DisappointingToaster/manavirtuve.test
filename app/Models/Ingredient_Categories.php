@@ -14,4 +14,8 @@ class Ingredient_Categories extends Model
     public function ingredients(){
         return $this->hasMany(Ingredients::class,'category_id');
     }
+    protected $fillable=[
+        'category_name'
+    ];
+
 }
