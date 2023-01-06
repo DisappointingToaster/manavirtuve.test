@@ -10,7 +10,7 @@
         
         <div class='display_box_container'>
             
-            @for($i=0;$i<20;$i++)
+            @for($i=0;$i<9;$i++)
             
                 <div class='diplay_box_2'>
                     <img src="{{URL('images/missing.jpg')}}">

@@ -24,3 +24,6 @@ Route::get('/kitchen',[main_route_handler::class,'kitchen']);
 Route::get('/fridge',[main_route_handler::class,'fridge']);
 Route::get('/recipes',[recipe_controller::class,'recipes']);
 Route::get('/moderation',[main_route_handler::class,'moderation']);
+Route::get('/recipes/{recipe}',[recipe_controller::class,'showSingleRecipe']);
+Route::get('/kitchen/new',[main_route_handler::class,'addRecipe']);
+Route::post('/recipes',[recipe_controller::class,'createRecipe']);

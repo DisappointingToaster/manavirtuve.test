@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipes;
 use Illuminate\Http\Request;
 
 class main_route_handler extends Controller
 {
     public function index(){
-        return view('homepage');
+        $latestRecipes=Recipes::latest()->limit(5)->get();
+        $popularRecipes=Recipes::all()->sortBy('favourites')->take(5);
+        return view('homepage',[
+            'latestRecipes'=>$latestRecipes,
+            'popularRecipes'=>$popularRecipes
+        ]);
     }
     public function kitchen(){
-        return view('kitchen');
+        return view('kitchen.kitchen');
         
     }
     public function profile(){
@@ -25,5 +31,8 @@ class main_route_handler extends Controller
     }
     public function moderation(){
         return view('moderation');
+    }
+    public function addRecipe(){
+        return view('recipes.addRecipe');
     }
 }

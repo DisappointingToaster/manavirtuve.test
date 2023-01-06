@@ -20,9 +20,10 @@ return new class extends Migration
             $table->longText('description');
             $table->longText('tags');
             //$table->string('image');
-            //$table->integer('views');
+            $table->integer('favourites');
             //$table->integer('user');
             //$table->boolean('flagged')
+            //$table->boolean('promoted');
             
         });
     }

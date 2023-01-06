@@ -187,7 +187,15 @@ nav h2{
     border-radius: 10px;
 }
 .filter_list ul{
-    list-style-type: none;
+    list-style: none;
+    margin:10px 0px;
+}
+.filter_list>span{
+    font-weight: bold;
+}
+.category_list{
+    /* border: #2d2d2d;
+    border-style: solid; */
 }
 .nav_items .moderation_link{
     background-color: rgb(186, 68, 68);
@@ -226,6 +234,7 @@ nav h2{
     background-color: #b0b4b6;
     margin-bottom: 5px;
 }
+/* Jaunu recepšu poga "mana virtuve" skatā */
 a.button{
     border-radius: 15px;
     border-color: #20ac53;
@@ -234,17 +243,12 @@ a.button{
     font-size: xx-large;
     text-decoration: none;
     color:white;  
-    margin-left: 10%; 
-}
-.new_recipe_button{
-    
-    background-color: #7a7e80;
-    padding: 20px;
-    left:20px;
-}
-.new_recipe_button a{
     padding: 10px;
     font-size: 28px;
+}
+.new_recipe_button{
+    background-color: #7a7e80;
+    padding: 20px;
 }
 .diplay_box_2{
     padding:20px;
@@ -254,5 +258,4 @@ a.button{
     width: 20%;
     margin: 10px;
     border-radius: 10px;
-
 }

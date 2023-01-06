@@ -9,4 +9,11 @@ class Recipes extends Model
 {
     use HasFactory;
     protected $table = 'recipe';
+    protected $primaryKey = 'id';
+    protected $fillable =[
+        'name','tags','description'
+    ];
+    protected $attributes = array(
+        'favourites' => 0,
+     );
 }

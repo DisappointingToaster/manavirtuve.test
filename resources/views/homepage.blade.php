@@ -48,23 +48,24 @@
     
     <div class='recipe_listings'>
             <div class='popular_recipes'>
-                @for($i=0;$i<5;$i++)
+                <h2>Popular recipes</h2>
+                @foreach ($popularRecipes as $popularRecipe)
                 <div class='listing_card'>
                     <img src="{{URL('images/missing.jpg')}}">
-                    <h3>Popular recipe</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde laborum consequatur tempora id, praesentium reprehenderit quasi quidem maiores nobis nihil earum numquam voluptatibus est perspiciatis laudantium animi quod at neque?</p>
+                    <h3>{{$popularRecipe->name}}</h5>
+                    <p>{{$popularRecipe->description}}</p>
                 </div>
-            @endfor
+                @endforeach
         </div>
-
         <div class='new_recipes'>
-            @for($i=0;$i<5;$i++)
+            <h2>New Recipes</h2>
+            @foreach ($latestRecipes as $latestRecipe)
                 <div class='listing_card'>
                     <img src="{{URL('images/missing.jpg')}}">
-                    <h3>New recipe</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde laborum consequatur tempora id, praesentium reprehenderit quasi quidem maiores nobis nihil earum numquam voluptatibus est perspiciatis laudantium animi quod at neque?</p>
+                    <h3>{{$latestRecipe->name}}</h5>
+                    <p>{{$latestRecipe->description}}</p>
                 </div>
-                @endfor
+                @endforeach
         </div>
     </div>
 </div>
