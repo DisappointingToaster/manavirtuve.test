@@ -30,3 +30,4 @@ Route::get('/kitchen/new',[main_route_handler::class,'addRecipe']);
 Route::post('/recipes',[recipe_controller::class,'createRecipe']);
 Route::get('/moderation/editFilters',[recipe_controller::class,'modifyFilters']);
 Route::post('/moderation/newCategory',[recipe_controller::class,'createCategory']);
+Route::post('/moderation/newIngredient',[recipe_controller::class,'createIngredient']);

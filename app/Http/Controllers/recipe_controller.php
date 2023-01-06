@@ -14,7 +14,7 @@ class recipe_controller extends Controller
         $recipes=Recipes::all();
         return view('recipes.recipes',[
             'recipes'=>$recipes,
-        ])->with('ingredient_categories',$ingredient_categories,);
+        ])->with('ingredient_categories',$ingredient_categories);
         
     }
     public function showSingleRecipe(Recipes $recipe){
@@ -31,11 +31,19 @@ class recipe_controller extends Controller
         return redirect('/kitchen');
     }
     public function modifyFilters(){
-        return view('moderation.modifyFilters');
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
+        return view('moderation.modifyFilters')->with('ingredient_categories',$ingredient_categories);
     }
     public function createCategory(Request $request){
         $category=Ingredient_Categories::create([
         'category_name'=>$request->input('category_name')
+        ]);
+        return redirect('/moderation/editFilters');
+    }
+    public function createIngredient(Request $request){
+        $ingredient=Ingredients::create([
+        'ingredient_name'=>$request->input('ingredient_name'),
+        'category_id'=>$request->input('categories')
         ]);
         return redirect('/moderation/editFilters');
     }
