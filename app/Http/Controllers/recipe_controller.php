@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 class recipe_controller extends Controller
 {
-    public function recipes(){
+    public function recipes(Request $request){
+        
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
-        $recipes=Recipes::all();
+        $recipes=Recipes::latest()->filter
+            (request(['search','category']))->get();
         return view('recipes.recipes',[
             'recipes'=>$recipes,
         ])->with('ingredient_categories',$ingredient_categories);

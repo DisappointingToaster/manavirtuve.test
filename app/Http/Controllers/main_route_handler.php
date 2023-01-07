@@ -10,11 +10,15 @@ class main_route_handler extends Controller
     public function index(){
         $latestRecipes=Recipes::latest()->limit(5)->get();
         $popularRecipes=Recipes::all()->sortBy('favourites')->take(5);
-        $promotedRecipes=Recipes::all()->where('promoted','=',true)->take(3);
+        $promotedRecipes=Recipes::all()->where('promoted','=',true)->shuffle()->take(3);
         $recentlyViewed=session()->get('recipe.recently_viewed');
-        
         //session()->flush();
-        $recentRecipes=Recipes::whereIn('id',$recentlyViewed)->latest()->take(10)->get();
+        if(!$recentlyViewed==null){
+            array_slice($recentlyViewed,-10,10);
+            $recentRecipes=Recipes::whereIn('id',$recentlyViewed)->latest()->take(10)->get();
+        }else{
+            $recentRecipes=null;
+        }
         return view('homepage',[
             'latestRecipes'=>$latestRecipes,
             'popularRecipes'=>$popularRecipes,

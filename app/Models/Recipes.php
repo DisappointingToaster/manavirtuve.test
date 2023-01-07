@@ -19,4 +19,21 @@ class Recipes extends Model
         'promoted'=>false,
         'hidden'=>false
      );
+    public function scopeFilter($query, array $filters){
+        if($filters['search']??false){
+            $query->where('name','like','%'.request('search').'%')
+            ->orWhere('description','like','%'.request('search').'%');
+        };
+        
+        if($filters['category']??false){
+            $tags=request('category');
+            
+            $query->
+                where(function ($query2) use($tags) {
+                for ($i = 0; $i < count($tags); $i++){
+                      $query2->where('tags', 'like',  '%' . $tags [$i] .'%');
+                }
+            });
+        };
+    }
 }

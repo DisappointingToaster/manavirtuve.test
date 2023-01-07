@@ -8,19 +8,31 @@
         <div>
             <form role="search">
                 <div class="input-group">
-                    <input type="search" placeholder="Search your recipe" class="" value=""/>
-                    <button class="submit-button" type="submit">Submit</button>
+                    <form action="/recipes">
+                        <input type="text" placeholder="Search your recipe" class="" name="search" />
+                        <button class="submit_button" type="submit">Submit</button>
+                    </form>
                 </div>
             </form>
         </div>
         @if(count($ingredient_categories)!=0)
         <div class="filter_list">
+            <form>
             @forelse ($ingredient_categories as $category)
                 <h5>{{$category->category_name}}</h5>
                 <ul>
                      @forelse ($category->ingredients as $ingredients)
-                    <li>
-                        <input type="checkbox" value="{{$ingredients->ingredient_name}}">
+                        @php
+                            $checked=[];
+                            if(isset($_GET['category'])){
+                                $checked=$_GET['category'];
+                            }
+                        @endphp
+                     <li>
+                        <input type="checkbox" value="{{$ingredients->ingredient_name}}" name="category[]"
+                        @if(in_array($ingredients->ingredient_name, $checked)) checked @endif
+                        
+                        >
                         <span>{{$ingredients->ingredient_name}}</span>
                     </li>
                     @empty
@@ -29,10 +41,10 @@
                 </ul>
             @empty
                 <h5>No ingredients to display</h5>
-            @endforelse    
-            
-            </div>
-        
+            @endforelse   
+            <button class="submit-button" type="submit">Submit</button>
+            </form>
+        </div> 
     </div>
 
     @else

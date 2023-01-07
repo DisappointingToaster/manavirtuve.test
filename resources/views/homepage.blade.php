@@ -21,15 +21,17 @@
         @endforelse
         
     </div>
-    @if(count($recentlyViewed)!=0)
-    <div class='recently_viewed_container'>
-        @foreach ($recentlyViewed as $recentRecipe)
-        <div class='recently_viewed_frame'> 
-            <img src="{{$recentRecipe->image_path ? asset('images/recipes/'.$recentRecipe->image_path) : asset('images/missing.jpg') }} ">
-            <a href="/recipes/{{$recentRecipe->id}}">{{$recentRecipe->name}}</a>
+    @if(!$recentlyViewed==null)
+        @if(count($recentlyViewed)!=0)
+        <div class='recently_viewed_container'>
+            @foreach ($recentlyViewed as $recentRecipe)
+            <div class='recently_viewed_frame'> 
+                <img src="{{$recentRecipe->image_path ? asset('images/recipes/'.$recentRecipe->image_path) : asset('images/missing.jpg') }} ">
+                <a href="/recipes/{{$recentRecipe->id}}">{{$recentRecipe->name}}</a>
+            </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
+        @endif
     @endif
     <div class='recipe_listings'>
             <div class='popular_recipes'>
