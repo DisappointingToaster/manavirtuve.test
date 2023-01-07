@@ -37,3 +37,4 @@ Route::delete('/recipes/{recipe}',[recipe_controller::class,'deleteRecipe']);
 Route::delete('/moderation/ingredient/{ingredient}',[recipe_controller::class,'deleteIngredient']);
 Route::delete('/moderation/category/{category}',[recipe_controller::class,'deleteCategory']);
 Route::post('/fridge',[recipe_controller::class,'fridgeIngredients']);
+Route::put('/recipes/{recipe}/promote',[recipe_controller::class,'promoteRecipe']);

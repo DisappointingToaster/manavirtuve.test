@@ -11,9 +11,12 @@ class Recipes extends Model
     protected $table = 'recipe';
     protected $primaryKey = 'id';
     protected $fillable =[
-        'name','tags','description','image_path'
+        'name','tags','description','image_path','promoted'
     ];
     protected $attributes = array(
         'favourites' => 0,
+        'flagged'=>false,
+        'promoted'=>false,
+        'hidden'=>false
      );
 }

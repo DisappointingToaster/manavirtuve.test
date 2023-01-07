@@ -6,7 +6,7 @@ use App\Models\Ingredient_Categories;
 use App\Models\Recipes;
 use App\Models\Ingredients;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
 class recipe_controller extends Controller
 {
     public function recipes(){
@@ -18,6 +18,9 @@ class recipe_controller extends Controller
         
     }
     public function showSingleRecipe(Recipes $recipe){
+        if(!session()->has('recipe.recently_viewed',$recipe->id)){
+            session()->push('recipe.recently_viewed',$recipe->id);
+        }
         return view('recipes.recipe',[
             'recipe'=>$recipe,
         ]);
@@ -107,6 +110,11 @@ class recipe_controller extends Controller
         return back();
     }
     public function deleteRecipe(Recipes $recipe){
+        session()->forget('recipe.recently_viewed',[$recipe->id]);
+        $imagePath="images/recipes/" . $recipe->image_path;
+        if(File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
         $recipe->delete();
         return redirect('/recipes');
     }
@@ -143,5 +151,18 @@ class recipe_controller extends Controller
     public function addRecipe(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('recipes.addRecipe')->with('ingredient_categories',$ingredient_categories);
+    }
+    public function promoteRecipe(Request $request, Recipes $recipe){
+        if($request->promote_button==="true"){
+            $recipe->update([
+                'promoted'=>true
+            ]);
+        }
+        if($request->promote_button==="false"){
+            $recipe->update([
+                'promoted'=>false
+            ]);
+        }
+        return back();
     }
 }

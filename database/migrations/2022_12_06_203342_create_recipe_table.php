@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->integer('favourites');
             //$table->integer('user');
-            //$table->boolean('flagged')
-            //$table->boolean('promoted');
+            $table->boolean('flagged');
+            $table->boolean('promoted');
+            $table->boolean('hidden');
             
         });
     }

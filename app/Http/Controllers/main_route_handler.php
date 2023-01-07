@@ -10,9 +10,16 @@ class main_route_handler extends Controller
     public function index(){
         $latestRecipes=Recipes::latest()->limit(5)->get();
         $popularRecipes=Recipes::all()->sortBy('favourites')->take(5);
+        $promotedRecipes=Recipes::all()->where('promoted','=',true)->take(3);
+        $recentlyViewed=session()->get('recipe.recently_viewed');
+        
+        //session()->flush();
+        $recentRecipes=Recipes::whereIn('id',$recentlyViewed)->latest()->take(10)->get();
         return view('homepage',[
             'latestRecipes'=>$latestRecipes,
-            'popularRecipes'=>$popularRecipes
+            'popularRecipes'=>$popularRecipes,
+            'promotedRecipes'=>$promotedRecipes,
+            'recentlyViewed'=>$recentRecipes
         ]);
     }
     

@@ -5,54 +5,39 @@
 
 <div>
     <div class='promoted_recipes'>
+        @forelse ($promotedRecipes as $promotedRecipe)
         <div class='promoted_card'>
             <div class='card_back'>
-                <img src="{{URL('images/chicken.jpg')}}">
+                <img src="{{$promotedRecipe->image_path ? asset('images/recipes/'.$promotedRecipe->image_path) : asset('images/missing.jpg') }} ">
                 
             </div>
             <div class='card_front'>
-                <h2>Promoted recipe 1</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, vitae incidunt similique ipsa necessitatibus repudiandae placeat alias possimus libero qui rerum unde mollitia facilis. Aperiam doloribus fugit tempore laudantium facilis!</p>
+                <a href="/recipes/{{$promotedRecipe->id}}">{{$promotedRecipe->name}}</a>
+                <p>{{$promotedRecipe->description}}</p>
             </div>
-        </div>
-        <div class='promoted_card'>
-            <div class='card_back'>
-                
-                <img src="{{URL('images/egg.jpg')}}">
-            </div>
-            <div class='card_front'>
-                <h2>Promoted recipe 2</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, vitae incidunt similique ipsa necessitatibus repudiandae placeat alias possimus libero qui rerum unde mollitia facilis. Aperiam doloribus fugit tempore laudantium facilis!</p>
-            </div>
-        </div>
-        <div class='promoted_card'>
-            <div class='card_back'>
-                
-                <img src="{{URL('images/toast.jpg')}}">
-            </div>
-            <div class='card_front'>
-                <h2>Promoted recipe 3</h2>
-                <p>Test text 12355677</p>
-            </div>
-        </div>
+        </div> 
+        @empty
+            <h2>No promoted recipes at the moment</h2>
+        @endforelse
+        
     </div>
-
+    @if(count($recentlyViewed)!=0)
     <div class='recently_viewed_container'>
-        @for($i=0;$i<10;$i++)
+        @foreach ($recentlyViewed as $recentRecipe)
         <div class='recently_viewed_frame'> 
-            <img src="{{URL('images/missing.jpg')}}">
-            <h5>Recently viewed recipe</h5>
+            <img src="{{$recentRecipe->image_path ? asset('images/recipes/'.$recentRecipe->image_path) : asset('images/missing.jpg') }} ">
+            <a href="/recipes/{{$recentRecipe->id}}">{{$recentRecipe->name}}</a>
         </div>
-        @endfor
+        @endforeach
     </div>
-    
+    @endif
     <div class='recipe_listings'>
             <div class='popular_recipes'>
                 <h2>Popular recipes</h2>
                 @foreach ($popularRecipes as $popularRecipe)
                 <div class='listing_card'>
                     <img src="{{$popularRecipe->image_path ? asset('images/recipes/'.$popularRecipe->image_path) : asset('images/missing.jpg') }} ">
-                    <h3>{{$popularRecipe->name}}</h5>
+                    <a href="/recipes/{{$popularRecipe->id}}">{{$popularRecipe->name}}</a>
                     <p>{{$popularRecipe->description}}</p>
                 </div>
                 @endforeach
@@ -62,7 +47,7 @@
             @foreach ($latestRecipes as $latestRecipe)
                 <div class='listing_card'>
                     <img src="{{$latestRecipe->image_path ? asset('images/recipes/'.$latestRecipe->image_path) : asset('images/missing.jpg') }} ">
-                    <h3>{{$latestRecipe->name}}</h5>
+                    <a href="/recipes/{{$latestRecipe->id}}">{{$latestRecipe->name}}</a>
                     <p>{{$latestRecipe->description}}</p>
                 </div>
                 @endforeach
