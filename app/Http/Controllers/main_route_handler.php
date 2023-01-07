@@ -15,10 +15,7 @@ class main_route_handler extends Controller
             'popularRecipes'=>$popularRecipes
         ]);
     }
-    public function kitchen(){
-        return view('kitchen.kitchen');
-        
-    }
+    
     public function profile(){
         return view('userInfo');
     }
@@ -32,7 +29,5 @@ class main_route_handler extends Controller
     public function moderation(){
         return view('moderation.moderation');
     }
-    public function addRecipe(){
-        return view('recipes.addRecipe');
-    }
+    
 }

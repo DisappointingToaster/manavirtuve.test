@@ -10,7 +10,21 @@
                         @csrf
                         <div>
                                 <input type="text" name="recipe_name" placeholder="Your recipe name">
-                                <input type="text" name="tags" placeholder="Your recipe tags">
+                                @forelse ($ingredient_categories as $category)
+                                <h5>{{$category->category_name}}</h5>
+                                <ul>
+                                @forelse ($category->ingredients as $ingredients)
+                                        <li>
+                                                <input type="checkbox" value="{{$ingredients->ingredient_name}}" name="tags[]">
+                                                <span>{{$ingredients->ingredient_name}}</span>
+                                        </li>
+                                @empty
+                                <p>No ingredients available</p>
+                                @endforelse
+                                </ul>
+                                @empty
+                                <h5>No categories to display</h5>
+                                @endforelse
                                 <textarea name="recipe_description"></textarea>
                                 <input type="file" name="recipe_image">
                                 <button name="submit" type="submit">Submit</button>

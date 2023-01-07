@@ -29,6 +29,32 @@
                         </div>
                 </form>
         </div>
+        <div class="">
+                @forelse ($ingredient_categories as $category)
+                        <form method="POST" action ="/moderation/category/{{$category->id}}">
+                                @csrf
+                                @method('DELETE')
+                                <span><b>{{$category->category_name}}</b></span>
+                                <button class="delete_button">Delete</button>
+                        </form>    
+                    <ul>
+                         @forelse ($category->ingredients as $ingredients)
+                        <li>
+                                <form method="POST" action ="/moderation/ingredient/{{$ingredients->id}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <span>{{$ingredients->ingredient_name}}</span>
+                                        <button class="delete_button">Delete</button>
+                                </form>    
+                        </li>
+                        @empty
+                        <p>No ingredients available</p>
+                    @endforelse
+                    </ul>
+                @empty
+                    <h5>No ingredients to display</h5>
+                @endforelse    
+        </div>
 
 </div>
 @endsection

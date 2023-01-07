@@ -13,5 +13,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-public/images/recipes/1673027799-tests.jpg
-public/images/recipes/phpD2C5.tmp
+/public/images/recipes
+

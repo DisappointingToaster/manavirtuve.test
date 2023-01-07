@@ -10,15 +10,18 @@
         
         <div class='display_box_container'>
             
-            @for($i=0;$i<9;$i++)
+            @forelse($recipes as $recipe)
             
-                <div class='diplay_box_2'>
-                    <img src="{{URL('images/missing.jpg')}}">
-                    <a href='#'>Recipe name</a>
-                    <span>Egg, Salt, Bacon</span>
-                    <span>Lorem ipsum dolor sit amet, </span>
+                <div class='diplay_box'>
+                
+                    <img src="{{$recipe->image_path ? asset('images/recipes/'.$recipe->image_path) : asset('images/missing.jpg') }} ">
+                    <a href="/recipes/{{$recipe->id}}">{{$recipe->name}}</a>
+                    <span>{{$recipe->tags}}</span>
+                    <span>{{$recipe->description}}</span>
                 </div>
-             @endfor
+            @empty
+            <p>Sorry, no recipes to display</p>
+            @endforelse
         </div>
         
 </div>

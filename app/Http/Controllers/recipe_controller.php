@@ -23,26 +23,34 @@ class recipe_controller extends Controller
         ]);
     }
     public function createRecipe(Request $request){
+        $input=$request->all();
+        if(!empty($input['tags'])){
+        sort($input['tags']);
+        $tags=implode(', ',$input['tags']);
+        }else{
+            $tags=null;
+        };
         $request->validate([
             'recipe_name'=>'required|max:255',
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
         ]);
+
         if($request->recipe_image!=null){
         $recipeImageName = time().'-'.$request->recipe_name.'.'. 
         $request->recipe_image->extension();
         $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
         $recipe= Recipes::create([
             'name'=>$request->input('recipe_name'),
-            'tags'=>$request->input('tags'),
+            'tags'=>$tags,
             'description'=>$request->input('recipe_description'),
             'image_path'=>$recipeImageName
         ]);
     }else{
         $recipe= Recipes::create([
             'name'=>$request->input('recipe_name'),
-            'tags'=>$request->input('tags'),
+            'tags'=>$tags,
             'description'=>$request->input('recipe_description'),
         ]);
     }
@@ -97,5 +105,43 @@ class recipe_controller extends Controller
         };
         
         return back();
+    }
+    public function deleteRecipe(Recipes $recipe){
+        $recipe->delete();
+        return redirect('/recipes');
+    }
+    public function deleteIngredient(Ingredients $ingredient){
+        $ingredient->delete();
+        return redirect()->back();
+    }
+    public function deleteCategory(Ingredient_Categories $category){
+        $category->delete();
+        return redirect()->back();
+    }
+    public function kitchen(){
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
+        $recipes=Recipes::all();
+        return view('kitchen.kitchen',[
+            'recipes'=>$recipes,
+        ])->with('ingredient_categories',$ingredient_categories);
+        
+    }
+    public function fridge(){
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
+        return view('fridge')
+        ->with('ingredient_categories',$ingredient_categories);
+    }
+    public function fridgeIngredients(Request $request){
+        $input=$request->all();
+        sort($input['ingredient']);
+        $tags=implode(', ',$input['ingredient']);
+        dd($tags);
+
+
+        return back();
+    }
+    public function addRecipe(){
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
+        return view('recipes.addRecipe')->with('ingredient_categories',$ingredient_categories);
     }
 }

@@ -51,7 +51,7 @@
                 <h2>Popular recipes</h2>
                 @foreach ($popularRecipes as $popularRecipe)
                 <div class='listing_card'>
-                    <img src="{{URL('images/missing.jpg')}}">
+                    <img src="{{$popularRecipe->image_path ? asset('images/recipes/'.$popularRecipe->image_path) : asset('images/missing.jpg') }} ">
                     <h3>{{$popularRecipe->name}}</h5>
                     <p>{{$popularRecipe->description}}</p>
                 </div>
@@ -61,7 +61,7 @@
             <h2>New Recipes</h2>
             @foreach ($latestRecipes as $latestRecipe)
                 <div class='listing_card'>
-                    <img src="{{URL('images/missing.jpg')}}">
+                    <img src="{{$latestRecipe->image_path ? asset('images/recipes/'.$latestRecipe->image_path) : asset('images/missing.jpg') }} ">
                     <h3>{{$latestRecipe->name}}</h5>
                     <p>{{$latestRecipe->description}}</p>
                 </div>
