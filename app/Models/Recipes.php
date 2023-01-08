@@ -11,13 +11,14 @@ class Recipes extends Model
     protected $table = 'recipe';
     protected $primaryKey = 'id';
     protected $fillable =[
-        'name','tags','description','image_path','promoted','user_id'
+        'name','tags','description','image_path','promoted','user_id','hidden'
     ];
     protected $attributes = array(
         'favourites' => 0,
         'flagged'=>false,
         'promoted'=>false,
-        'hidden'=>false
+        'hidden'=>true,
+        'forcedHidden'=>false
      );
     public function scopeFilter($query, array $filters){
         if($filters['search']??false){

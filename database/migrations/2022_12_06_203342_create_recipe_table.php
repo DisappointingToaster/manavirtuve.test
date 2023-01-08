@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('flagged');
             $table->boolean('promoted');
             $table->boolean('hidden');
+            $table->boolean('forcedHidden');
             
         });
     }

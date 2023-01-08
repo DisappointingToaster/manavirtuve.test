@@ -24,7 +24,6 @@
                     <li ><a href="/">Home</a></li>
                     <li ><a href="/recipes">Recipes</a></li>
                     @auth
-                    <li ><a href="/fridge">Fridge</a></li>
                     <li ><a href="/kitchen">My Kitchen</a></li>
                     @if(auth()->user()->role_id>1)
                     <li class="moderation_link"><a href="/moderation">Moderation</a></li>
@@ -48,8 +47,10 @@
         </div>
         <main>
             @yield('content')
-
+            <script src="{{URL::asset('js/main.js') }}"></script>
+            <script src="//unpkg.com/alpinejs" defer></script>
         </main>
+        <x-flashMessage class="flash_message" id="flash_message"/>
     </body>
     <footer>
         

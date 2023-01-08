@@ -12,7 +12,7 @@ class recipe_controller extends Controller
     public function recipes(Request $request){
         
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
-        $recipes=Recipes::latest()->filter
+        $recipes=Recipes::latest()->where('hidden','=',false)->filter
             (request(['search','category']))->get();
         return view('recipes.recipes',[
             'recipes'=>$recipes,
@@ -62,7 +62,7 @@ class recipe_controller extends Controller
             ]);
     }
         
-        return redirect('/kitchen');
+        return redirect('/kitchen')->with('message','Recipe created');
     }
     public function modifyFilters(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
@@ -72,14 +72,14 @@ class recipe_controller extends Controller
         $category=Ingredient_Categories::create([
         'category_name'=>$request->input('category_name')
         ]);
-        return redirect('/moderation/editFilters');
+        return redirect('/moderation/editFilters')->with('message','Category created');
     }
     public function createIngredient(Request $request){
         $ingredient=Ingredients::create([
         'ingredient_name'=>$request->input('ingredient_name'),
         'category_id'=>$request->input('categories')
         ]);
-        return redirect('/moderation/editFilters');
+        return redirect('/moderation/editFilters')->with('message','Ingredient created');;
     }
     public function editRecipe(Recipes $recipe){
         return view('recipes.editRecipe',[
@@ -111,7 +111,7 @@ class recipe_controller extends Controller
             ]);
         };
         
-        return back();
+        return back()->with('message','Recipe updated');
     }
     public function deleteRecipe(Recipes $recipe){
         session()->forget('recipe.recently_viewed',[$recipe->id]);
@@ -120,15 +120,15 @@ class recipe_controller extends Controller
             File::delete($imagePath);
         }
         $recipe->delete();
-        return redirect('/recipes');
+        return redirect('/recipes')->with('message','Recipe deleted');
     }
     public function deleteIngredient(Ingredients $ingredient){
         $ingredient->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message','Ingredient deleted');
     }
     public function deleteCategory(Ingredient_Categories $category){
         $category->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message','Category deleted');
     }
     public function kitchen(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
@@ -138,35 +138,40 @@ class recipe_controller extends Controller
         ])->with('ingredient_categories',$ingredient_categories);
         
     }
-    public function fridge(){
-        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
-        return view('fridge')
-        ->with('ingredient_categories',$ingredient_categories);
-    }
-    public function fridgeIngredients(Request $request){
-        $input=$request->all();
-        sort($input['ingredient']);
-        $tags=implode(', ',$input['ingredient']);
-        dd($tags);
-
-
-        return back();
-    }
+    
     public function addRecipe(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('recipes.addRecipe')->with('ingredient_categories',$ingredient_categories);
     }
     public function promoteRecipe(Request $request, Recipes $recipe){
-        if($request->promote_button==="true"){
-            $recipe->update([
-                'promoted'=>true
-            ]);
-        }
         if($request->promote_button==="false"){
             $recipe->update([
                 'promoted'=>false
             ]);
         }
-        return back();
+        if($recipe->tags===null){
+            return back()->with('message','Recipe without tags can\'t be promoted.');
+        } else{
+            if($request->promote_button==="true"){
+                $recipe->update([
+                    'promoted'=>true
+                ]);
+            }
+            return back()->with('message','Recipe set to promoted.');
+        }
+    }
+    public function publishRecipe(Request $request, Recipes $recipe){
+        if($request->publish_button==="false"){
+            $recipe->update([
+                'hidden'=>false
+            ]);
+            return back()->with('message','Recipe Published.');
+        }
+        if($request->publish_button==="true"){
+                $recipe->update([
+                    'hidden'=>true
+                ]);
+                return back()->with('message','Recipe hidden.');
+            }
     }
 }

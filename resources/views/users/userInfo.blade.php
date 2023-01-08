@@ -4,9 +4,10 @@
 @section('userContent')
 
 <div class='user_info_container'>
-    <h1>test2</h1>
-    
-    
-
+    <div >
+       <h2>Email:</h2>
+       <span>{{auth()->user()->email}}</span> 
+       <a href="/profile/update">Update Info</a>
+    </div>
 </div>
 @endsection
