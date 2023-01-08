@@ -23,10 +23,26 @@
                 <ul class="nav_items">
                     <li ><a href="/">Home</a></li>
                     <li ><a href="/recipes">Recipes</a></li>
+                    @auth
                     <li ><a href="/fridge">Fridge</a></li>
                     <li ><a href="/kitchen">My Kitchen</a></li>
+                    @if(auth()->user()->role_id>1)
                     <li class="moderation_link"><a href="/moderation">Moderation</a></li>
+                    @endif
                     <li ><a href="/profile/info">Profile</a></li>
+                    <li><span class="welcome_message">
+                        Welcome {{auth()->user()->name}}</span>
+                    </li>
+                    <li>
+                        <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                    @else
+                    <li ><a href="/register">Register</a></li>
+                    <li ><a href="/login">Login</a></li>
+                    @endauth
                 </ul>
             </nav>  
         </div>

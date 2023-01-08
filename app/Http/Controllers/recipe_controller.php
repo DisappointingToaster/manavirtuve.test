@@ -41,23 +41,25 @@ class recipe_controller extends Controller
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
         ]);
-
+        $formFields['user_id']=auth()->user()->id;
         if($request->recipe_image!=null){
-        $recipeImageName = time().'-'.$request->recipe_name.'.'. 
-        $request->recipe_image->extension();
-        $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
-        $recipe= Recipes::create([
-            'name'=>$request->input('recipe_name'),
-            'tags'=>$tags,
-            'description'=>$request->input('recipe_description'),
-            'image_path'=>$recipeImageName
-        ]);
-    }else{
-        $recipe= Recipes::create([
-            'name'=>$request->input('recipe_name'),
-            'tags'=>$tags,
-            'description'=>$request->input('recipe_description'),
-        ]);
+            $recipeImageName = time().'-'.$request->recipe_name.'.'. 
+            $request->recipe_image->extension();
+            $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
+            $recipe= Recipes::create([
+                'name'=>$request->input('recipe_name'),
+                'tags'=>$tags,
+                'description'=>$request->input('recipe_description'),
+                'image_path'=>$recipeImageName,
+                'user_id'=>$formFields['user_id']
+            ]);
+        }else{
+            $recipe= Recipes::create([
+                'name'=>$request->input('recipe_name'),
+                'tags'=>$tags,
+                'description'=>$request->input('recipe_description'),
+                'user_id'=>$formFields['user_id']
+            ]);
     }
         
         return redirect('/kitchen');
@@ -130,7 +132,7 @@ class recipe_controller extends Controller
     }
     public function kitchen(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
-        $recipes=Recipes::all();
+        $recipes=Recipes::all()->where('user_id','=',auth()->user()->id);
         return view('kitchen.kitchen',[
             'recipes'=>$recipes,
         ])->with('ingredient_categories',$ingredient_categories);

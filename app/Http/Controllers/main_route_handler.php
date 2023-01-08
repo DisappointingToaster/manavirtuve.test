@@ -28,10 +28,10 @@ class main_route_handler extends Controller
     }
     
     public function profile(){
-        return view('userInfo');
+        return view('users.userInfo');
     }
     public function profileSecurity(){
-        return view('userSecurity');
+        return view('users.userSecurity');
     }
     
     public function fridge(){

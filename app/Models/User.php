@@ -21,8 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
-
+    protected $attributes = array(
+        'role_id' => 1, 
+    );
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -41,4 +44,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function recipes(){
+        return $this->hasMany(Recipes::class,'user_id');
+    }
 }

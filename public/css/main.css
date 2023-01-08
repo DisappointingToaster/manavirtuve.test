@@ -264,3 +264,6 @@ a.button{
     justify-content: space-around;
     align-items: center;
 }
+.welcome_message{
+    color: black;
+}

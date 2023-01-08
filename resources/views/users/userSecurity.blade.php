@@ -1,4 +1,4 @@
-@extends('userPage')
+@extends('users.userPage')
 
 
 @section('userContent')

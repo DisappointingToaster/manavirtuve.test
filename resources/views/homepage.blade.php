@@ -21,18 +21,7 @@
         @endforelse
         
     </div>
-    @if(!$recentlyViewed==null)
-        @if(count($recentlyViewed)!=0)
-        <div class='recently_viewed_container'>
-            @foreach ($recentlyViewed as $recentRecipe)
-            <div class='recently_viewed_frame'> 
-                <img src="{{$recentRecipe->image_path ? asset('images/recipes/'.$recentRecipe->image_path) : asset('images/missing.jpg') }} ">
-                <a href="/recipes/{{$recentRecipe->id}}">{{$recentRecipe->name}}</a>
-            </div>
-            @endforeach
-        </div>
-        @endif
-    @endif
+    
     <div class='recipe_listings'>
             <div class='popular_recipes'>
                 <h2>Popular recipes</h2>
@@ -54,6 +43,21 @@
                 </div>
                 @endforeach
         </div>
+    </div>
+    <div>
+        @if(!$recentlyViewed==null)
+            @if(count($recentlyViewed)!=0)
+            <h3>Recently viewed recipes</h3>
+            <div class='recently_viewed_container'>
+                @foreach ($recentlyViewed as $recentRecipe)
+                <div class='recently_viewed_frame'> 
+                    <img src="{{$recentRecipe->image_path ? asset('images/recipes/'.$recentRecipe->image_path) : asset('images/missing.jpg') }} ">
+                    <a href="/recipes/{{$recentRecipe->id}}">{{$recentRecipe->name}}</a>
+                </div>
+                @endforeach
+            </div>
+            @endif
+        @endif
     </div>
 </div>
 @endsection

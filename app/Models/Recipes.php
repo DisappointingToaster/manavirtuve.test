@@ -11,7 +11,7 @@ class Recipes extends Model
     protected $table = 'recipe';
     protected $primaryKey = 'id';
     protected $fillable =[
-        'name','tags','description','image_path','promoted'
+        'name','tags','description','image_path','promoted','user_id'
     ];
     protected $attributes = array(
         'favourites' => 0,
@@ -27,7 +27,6 @@ class Recipes extends Model
         
         if($filters['category']??false){
             $tags=request('category');
-            
             $query->
                 where(function ($query2) use($tags) {
                 for ($i = 0; $i < count($tags); $i++){
@@ -35,5 +34,8 @@ class Recipes extends Model
                 }
             });
         };
+    }
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
     }
 }
