@@ -82,11 +82,19 @@ class recipe_controller extends Controller
         return redirect('/moderation/editFilters')->with('message','Ingredient created');;
     }
     public function editRecipe(Recipes $recipe){
+        $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('recipes.editRecipe',[
             'recipe'=>$recipe
-        ]);
+        ])->with('ingredient_categories',$ingredient_categories);
     }
     public function updateRecipe(Recipes $recipe, Request $request){
+        $input=$request->all();
+        if(!empty($input['tags'])){
+        sort($input['tags']);
+        $tags=implode(', ',$input['tags']);
+        }else{
+            $tags=null;
+        };
         $request->validate([
             'recipe_name'=>'required|max:255',
             'tags'=>'nullable',
@@ -94,19 +102,19 @@ class recipe_controller extends Controller
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
         ]);
         if($request->recipe_image!=null){
-        $recipeImageName = time().'-'.$request->recipe_name.'.'. 
-        $request->recipe_image->extension();
-        $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
-        $recipe->update([
-            'name'=>$request->input('recipe_name'),
-            'tags'=>$request->input('tags'),
-            'description'=>$request->input('recipe_description'),
-            'image_path'=>$recipeImageName
+            $recipeImageName = time().'-'.$request->recipe_name.'.'. 
+            $request->recipe_image->extension();
+            $request->recipe_image->move(public_path('images/recipes'), $recipeImageName);
+            $recipe->update([
+                'name'=>$request->input('recipe_name'),
+                'tags'=>$tags,
+                'description'=>$request->input('recipe_description'),
+                'image_path'=>$recipeImageName
         ]);
         }else{
             $recipe->update([
                 'name'=>$request->input('recipe_name'),
-                'tags'=>$request->input('tags'),
+                'tags'=>$tags,
                 'description'=>$request->input('recipe_description'),
             ]);
         };
