@@ -20,6 +20,7 @@ class Recipes extends Model
         'hidden'=>true,
         'forcedHidden'=>false
      );
+     //this is what actually filters on query request
     public function scopeFilter($query, array $filters){
         if($filters['search']??false){
             $query->where('name','like','%'.request('search').'%')
@@ -36,6 +37,7 @@ class Recipes extends Model
             });
         };
     }
+    //setting relationships
     public function user(){
         return $this->belongsTo(User::class,'user_id');
     }

@@ -12,6 +12,7 @@ use App\Models\Ingredient_Categories;
 
 class recipe_controller extends Controller
 {
+    //returns view of all recipes for seaching
     public function recipes(Request $request){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::latest()->where('hidden','=',false)->filter
@@ -21,7 +22,9 @@ class recipe_controller extends Controller
         ])->with('ingredient_categories',$ingredient_categories);
         
     }
+    //shows single recipe
     public function showSingleRecipe(Recipes $recipe){
+        //adding recently_viewed to session
         if(!session()->has('recipe.recently_viewed',$recipe->id)){
             session()->push('recipe.recently_viewed',$recipe->id);
         }
@@ -30,7 +33,9 @@ class recipe_controller extends Controller
             'recipe'=>$recipe,
         ]);
     }
+    //recipe creation
     public function createRecipe(Request $request){
+        //ingredient conversion to string 
         $input=$request->all();
         if(!empty($input['tags'])){
         sort($input['tags']);
@@ -38,6 +43,7 @@ class recipe_controller extends Controller
         }else{
             $tags=null;
         };
+
         $request->validate([
             'recipe_name'=>'required|max:255',
             'tags'=>'nullable',
@@ -72,16 +78,20 @@ class recipe_controller extends Controller
         
         return redirect('/kitchen')->with('message','Recipe created');
     }
+    //admin view to modify filters
     public function modifyFilters(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('moderation.modifyFilters')->with('ingredient_categories',$ingredient_categories);
     }
+    //admin can add category
     public function createCategory(Request $request){
         $category=Ingredient_Categories::create([
         'category_name'=>$request->input('category_name')
         ]);
+
         return redirect('/moderation/editFilters')->with('message','Category created');
     }
+    //admin can add ingredients
     public function createIngredient(Request $request){
         $ingredient=Ingredients::create([
         'ingredient_name'=>$request->input('ingredient_name'),
@@ -89,13 +99,16 @@ class recipe_controller extends Controller
         ]);
         return redirect('/moderation/editFilters')->with('message','Ingredient created');;
     }
+    //return view of recipe edit
     public function editRecipe(Recipes $recipe){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('recipes.editRecipe',[
             'recipe'=>$recipe
         ])->with('ingredient_categories',$ingredient_categories);
     }
+    //post request to update recipe. similar to creation
     public function updateRecipe(Recipes $recipe, Request $request){
+        //creating a string from array
         $input=$request->all();
         if(!empty($input['tags'])){
         sort($input['tags']);
@@ -111,7 +124,8 @@ class recipe_controller extends Controller
         ],
         [
             'recipe_name.required'=>'Nepieciešams receptes nosaukums'
-        ]);;
+        ]);
+
         if($request->recipe_image!=null){
             $recipeImageName = time().'-'.$request->recipe_name.'.'. 
             $request->recipe_image->extension();
@@ -132,6 +146,7 @@ class recipe_controller extends Controller
         
         return redirect('/recipes/'.$recipe->id)->with('message','Recipe updated');
     }
+    //
     public function deleteRecipe(Recipes $recipe){
         session()->forget('recipe.recently_viewed',[$recipe->id]);
         $imagePath="images/recipes/" . $recipe->image_path;
