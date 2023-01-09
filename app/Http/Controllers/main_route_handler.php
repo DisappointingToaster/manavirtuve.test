@@ -34,9 +34,7 @@ class main_route_handler extends Controller
         return view('users.userSecurity');
     }
     
-    public function fridge(){
-        return view('fridge');
-    }
+   
     
     
 }

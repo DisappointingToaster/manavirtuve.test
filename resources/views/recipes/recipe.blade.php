@@ -10,8 +10,15 @@
                         <a href="/recipes/{{$recipe->id}}/edit">Edit recipe</a>
                 @endif
                 
-                <button>Favourite</button>
-        
+                <form action="/recipes/{{$recipe->id}}/favourite" method="POST">
+                        @csrf
+                        <button type="submit">Favourite</button>
+                </form>
+                <form action="/recipes/{{$recipe->id}}/favourite" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Unfavourite</button>
+                </form>
                         
                 
                 @if(auth()->user()->role_id>1 || auth()->user()->id==$recipe->user_id)

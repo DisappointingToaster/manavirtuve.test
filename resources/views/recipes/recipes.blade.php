@@ -18,6 +18,7 @@
         @if(count($ingredient_categories)!=0)
         <div class="filter_list">
             <form>
+            <button class="submit-button" type="submit">Submit</button>
             @forelse ($ingredient_categories as $category)
                 <h5>{{$category->category_name}}</h5>
                 <ul>
@@ -42,7 +43,7 @@
             @empty
                 <h5>No ingredients to display</h5>
             @endforelse   
-            <button class="submit-button" type="submit">Submit</button>
+            
             </form>
         </div> 
     </div>

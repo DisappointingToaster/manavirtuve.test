@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ingredient_Categories;
+use App\Models\Kitchen;
 use App\Models\Recipes;
 use App\Models\Ingredients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Models\Ingredient_Categories;
+
 class recipe_controller extends Controller
 {
     public function recipes(Request $request){
@@ -147,12 +150,14 @@ class recipe_controller extends Controller
         $category->delete();
         return redirect()->back()->with('message','Category deleted');
     }
+
     public function kitchen(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::all()->where('user_id','=',auth()->user()->id);
+        $favouritedRecipes=Kitchen::all()->where('user_id','=',auth()->user()->id);
         return view('kitchen.kitchen',[
             'recipes'=>$recipes,
-        ])->with('ingredient_categories',$ingredient_categories);
+        ])->with('ingredient_categories',$ingredient_categories)->with('fav_recipes',$favouritedRecipes);
         
     }
     
@@ -194,15 +199,38 @@ class recipe_controller extends Controller
     public function forceHide(Recipes $recipe, Request $request){
         if($request->forceHide_button==="false"){
             $recipe->update([
-                'forcedHidden'=>false
+                'forcedHidden'=>false,
+                
             ]);
             return back()->with('message','Recipe unhidden.');
         }
         if($request->forceHide_button==="true"){
                 $recipe->update([
-                    'forcedHidden'=>true
+                    'forcedHidden'=>true,
+                    'hidden'=>true
                 ]);
                 return back()->with('message','Recipe forced hidden.');
             }
     }
+    public function favouriteRecipe(Recipes $recipe){
+        if(Kitchen::where('recipe_id','=',$recipe->id)->where('user_id','=',auth()->user()->id)->exists()){
+            return back()->with('message','Can\'t favourite recipe');
+        }
+        if(Auth::check()){
+            Kitchen::create([
+                'user_id'=>auth()->user()->id,
+                'recipe_id'=>$recipe->id
+            ]);
+        return back()->with('message','Recipe favourited');
+    }else{
+        return back()->with('message','Can\'t favourite recipe');
+    }
+        
+    }
+    public function deleteFavourite(Recipes $recipe){
+        $kitchen=Kitchen::all()->where('recipe_id','=',$recipe->id)->where('user_id','=',auth()->user()->id);
+        $kitchen->each->delete();
+        return redirect()->back()->with('message','Recipe unfavourited');
+    }
+
 }

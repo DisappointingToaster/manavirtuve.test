@@ -53,3 +53,5 @@ Route::post('/report',[moderation_controller::class,'reportUser']);
 Route::put('/recipes/{recipe}/forceHide',[recipe_controller::class,'forceHide'])->middleware('auth','moderation');
 Route::put('/users/{user}/prohibitComment',[moderation_controller::class,'prohibitComment'])->middleware('auth','moderation');
 Route::put('/users/{user}/prohibitPost',[moderation_controller::class,'prohibitPost'])->middleware('auth','moderation');
+Route::post('/recipes/{recipe}/favourite',[recipe_controller::class,'favouriteRecipe'])->middleware('auth');
+Route::delete('/recipes/{recipe}/favourite',[recipe_controller::class,'deleteFavourite'])->middleware('auth');
