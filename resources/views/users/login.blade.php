@@ -3,34 +3,37 @@
 
 @section('content')
 
-<div class='register'>
-    <form action="/login" method="POST">
-        @csrf
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" name="email" value="{{old('email')}}">
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password">
-        </div>
-        <div>
-            <button>Sign up</button>
-        </div>
-        <div>
-            <p>Don't have an account?
-            <a href="/register">Register</a>
-            </p>
-        </div>
-    </form>
-    @if($errors->any())
-        <div> 
-            <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-        </div>
-        @endif
+<div class='login_container'>
+    <div class="login_card">
+        <h3>Log in</h3>
+        <form action="/login" method="POST">
+            @csrf
+            <div class="login_email">
+                <label for="email">Email:</label>
+                <input type="text" name="email" value="{{old('email')}}">
+                
+            </div>
+            @error('email')
+                <p class="login_error">{{$message}}</p>
+                @enderror
+            <div class="login_password"> 
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                
+            </div>
+            @error('password')
+                <p class="login_error">{{$message}}</p>
+                @enderror
+            <div class="login_sign">
+                <button>Sign up</button>
+            </div>
+            <div class="login_register">
+                <p>Don't have an account?
+                <a href="/register">Register</a>
+                </p>
+            </div>
+        </form>
+        
+    </div>
 </div>
 @endsection

@@ -35,7 +35,7 @@
                     <li>
                         <form action="/logout" method="POST">
                         @csrf
-                        <button type="submit">Logout</button>
+                        <button type="submit" class="logout_button">Logout</button>
                         </form>
                     </li>
                     @else

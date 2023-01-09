@@ -382,3 +382,82 @@ a.button{
     border-radius: 12px;
     padding: 10px;
 }
+.login_container{
+    height: 500px;
+    max-height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login_card{
+    background-color: #cfd3d4;
+    height: auto;
+    max-height: fit-content;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-direction: column;
+    padding: 20px 0px;
+}
+.login_card h3{
+    justify-self: center;
+    margin-bottom: 20px;
+    font-size: x-large;
+}
+.login_card form{
+    display: flex;
+    flex-direction: column;
+}
+.login_card label{
+    display: block;
+    margin: 10px 0px;
+}
+.login_sign, .login_email,.login_password,.login_register,.login_card p{
+    align-self: center;
+    justify-self: center;
+}
+.login_card input{
+    max-width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+.login_sign button{
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.login_error{
+    color: red;
+    margin: 5px;
+}
+.logout_button{
+    background-color: #ffffff; 
+    border: none;
+    color:#2d2d2d;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    padding: 2px 10px;;
+}
+.register_container{
+    display: flex;
+    justify-content: center ;
+    padding-top: 40px;
+}
+.login_card form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+    

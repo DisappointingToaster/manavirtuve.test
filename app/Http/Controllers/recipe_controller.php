@@ -13,7 +13,6 @@ use App\Models\Ingredient_Categories;
 class recipe_controller extends Controller
 {
     public function recipes(Request $request){
-        
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::latest()->where('hidden','=',false)->filter
             (request(['search','category']))->get();

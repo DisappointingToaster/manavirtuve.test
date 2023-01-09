@@ -92,11 +92,13 @@
                 <div class="comment_box"> 
                         @forelse ($recipe->comments as $comment)
                         <div class="comment_entry">
-                                @if(auth()->user()->role_id>1)
-                                <a href="/users/{{$comment->users->id}}">{{$comment->users->name}}</a>
-                                @else
-                                <h3>{{$comment->users->name}}</h3>
-                                @endif
+                                @auth
+                                        @if(auth()->user()->role_id>1)
+                                        <a href="/users/{{$comment->users->id}}">{{$comment->users->name}}</a>
+                                        @else
+                                        <h3>{{$comment->users->name}}</h3>
+                                        @endif
+                                @endauth
                                 <span>{{$comment->created_at}}</span>
                                 <a href="/report/{{$comment->users->id}}">Report user</a>
                                 <p>{{$comment->description}}</p>
