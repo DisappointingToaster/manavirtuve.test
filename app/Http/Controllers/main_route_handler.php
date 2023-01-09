@@ -37,8 +37,6 @@ class main_route_handler extends Controller
     public function fridge(){
         return view('fridge');
     }
-    public function moderation(){
-        return view('moderation.moderation');
-    }
+    
     
 }

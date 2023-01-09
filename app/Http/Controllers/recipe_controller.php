@@ -23,6 +23,7 @@ class recipe_controller extends Controller
         if(!session()->has('recipe.recently_viewed',$recipe->id)){
             session()->push('recipe.recently_viewed',$recipe->id);
         }
+       
         return view('recipes.recipe',[
             'recipe'=>$recipe,
         ]);
@@ -40,7 +41,12 @@ class recipe_controller extends Controller
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
+        ],
+        [
+            'recipe_name.required'=>'This field is required'
         ]);
+
+
         $formFields['user_id']=auth()->user()->id;
         if($request->recipe_image!=null){
             $recipeImageName = time().'-'.$request->recipe_name.'.'. 
@@ -100,7 +106,10 @@ class recipe_controller extends Controller
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
-        ]);
+        ],
+        [
+            'recipe_name.required'=>'Nepieciešams receptes nosaukums'
+        ]);;
         if($request->recipe_image!=null){
             $recipeImageName = time().'-'.$request->recipe_name.'.'. 
             $request->recipe_image->extension();
@@ -119,7 +128,7 @@ class recipe_controller extends Controller
             ]);
         };
         
-        return back()->with('message','Recipe updated');
+        return redirect('/recipes/'.$recipe->id)->with('message','Recipe updated');
     }
     public function deleteRecipe(Recipes $recipe){
         session()->forget('recipe.recently_viewed',[$recipe->id]);
@@ -180,6 +189,20 @@ class recipe_controller extends Controller
                     'hidden'=>true
                 ]);
                 return back()->with('message','Recipe hidden.');
+            }
+    }
+    public function forceHide(Recipes $recipe, Request $request){
+        if($request->forceHide_button==="false"){
+            $recipe->update([
+                'forcedHidden'=>false
+            ]);
+            return back()->with('message','Recipe unhidden.');
+        }
+        if($request->forceHide_button==="true"){
+                $recipe->update([
+                    'forcedHidden'=>true
+                ]);
+                return back()->with('message','Recipe forced hidden.');
             }
     }
 }

@@ -21,10 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'can_comment',
+        'can_post'
     ];
     protected $attributes = array(
         'role_id' => 1, 
+        'can_comment'=>true,
+        'can_post'=>true
     );
     /**
      * The attributes that should be hidden for serialization.
@@ -47,5 +51,11 @@ class User extends Authenticatable
     
     public function recipes(){
         return $this->hasMany(Recipes::class,'user_id');
+    }
+    public function comments(){
+        return $this->hasMany(Comments::class,'user_id');
+    }
+    public function reports(){
+        return $this->hasMany(Reports::class,'user_id');
     }
 }

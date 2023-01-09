@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\comment_controller;
 use App\Http\Controllers\main_route_handler;
 use App\Http\Controllers\moderation_controller;
 use App\Http\Controllers\recipe_controller;
@@ -24,7 +25,7 @@ Route::get('/profile/info',[main_route_handler::class,'profile'])->middleware('a
 Route::get('/profile/security',[main_route_handler::class,'profileSecurity'])->middleware('auth');
 Route::get('/kitchen',[recipe_controller::class,'kitchen'])->middleware('auth');
 Route::get('/recipes',[recipe_controller::class,'recipes']);
-Route::get('/moderation',[main_route_handler::class,'moderation'])->middleware('auth','moderation');
+Route::get('/moderation',[moderation_controller::class,'moderation'])->middleware('auth','moderation');
 Route::get('/recipes/{recipe}',[recipe_controller::class,'showSingleRecipe']);
 Route::get('/kitchen/new',[recipe_controller::class,'addRecipe'])->middleware('auth');
 Route::post('/recipes',[recipe_controller::class,'createRecipe'])->middleware('auth');
@@ -45,3 +46,10 @@ Route::post('/login',[user_controller::class,'loginUser'])->middleware('guest');
 Route::get('/profile/update',[user_controller::class,'update']);
 Route::put('/users/{user}/update',[user_controller::class,'updateUser']);
 Route::put('/recipes/{recipe}/publish',[recipe_controller::class,'publishRecipe']);
+Route::post('/recipes/{recipe}/comment',[comment_controller::class,'postComment']);
+Route::get('/users/{user}',[moderation_controller::class,'getUserPage'])->middleware('auth','moderation');
+Route::get('/report/{user}',[moderation_controller::class,'report']);
+Route::post('/report',[moderation_controller::class,'reportUser']);
+Route::put('/recipes/{recipe}/forceHide',[recipe_controller::class,'forceHide'])->middleware('auth','moderation');
+Route::put('/users/{user}/prohibitComment',[moderation_controller::class,'prohibitComment'])->middleware('auth','moderation');
+Route::put('/users/{user}/prohibitPost',[moderation_controller::class,'prohibitPost'])->middleware('auth','moderation');

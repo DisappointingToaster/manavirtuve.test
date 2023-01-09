@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ingredient_Categories;
 use App\Models\Ingredients;
+use App\Models\Report_Reason;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -62,6 +63,15 @@ class DatabaseSeeder extends Seeder
         Ingredients::create([
             'ingredient_name'=>'salt',
             'category_id'=>6
+        ]);
+        Report_Reason::create([
+            'report_reason'=>'Slurs, Cursing, Racism'
+        ]);
+        Report_Reason::create([
+            'report_reason'=>'Directed attack'
+        ]);
+        Report_Reason::create([
+            'report_reason'=>'Spam, malicous link'
         ]);
     }
 }

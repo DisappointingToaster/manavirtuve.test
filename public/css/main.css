@@ -143,6 +143,7 @@ nav h2{
 .listing_card{
     max-width: 300px;
     max-height: 400px;
+    height:400px;
     border-radius: 10px;
     border-color: #b0b4b6;
     border-style: solid;
@@ -153,6 +154,11 @@ nav h2{
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
 }
 .recipe_browser{
     display: flex;
@@ -185,6 +191,17 @@ nav h2{
     width: 25%;
     margin: 10px;
     border-radius: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    max-height: 600px;
+    align-items: center;
+}
+.diplay_box img{
+    max-width: 300px;
+    max-height: 300px;
 }
 .filter_list ul{
     list-style: none;
@@ -193,10 +210,7 @@ nav h2{
 .filter_list>span{
     font-weight: bold;
 }
-.category_list{
-    /* border: #2d2d2d;
-    border-style: solid; */
-}
+
 .nav_items .moderation_link{
     background-color: rgb(186, 68, 68);
     border-color: rgb(186, 68, 68);
@@ -286,4 +300,85 @@ a.button{
 .flash_message p{
     font-size: large;
     margin: 20px;
+}
+.single_recipe_display_container img{
+   max-width: 500px;
+   max-height: 500px;
+   margin:10 0px;
+   align-self: center;  
+   margin-bottom: 20px;
+   border-radius: 12px;
+   height: 500px;
+   width: 500px;
+}
+.single_recipe_display_container{
+    display: flex;
+    flex-direction: column;
+    background-color: #2d2d2d;
+    align-items: center;
+    background-image: url("../images/download.jpg");
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100%;   
+    width:fit-content;
+    height:fit-content;
+    
+}
+.single_recipe{
+    display: flex;
+    flex-direction: column;
+    background-color: #20ac53;
+    border: #1a9346;
+    border-radius: 12px;
+    max-width: 70%;
+    width: 70%;
+    padding: 50px;
+    padding-top: 30px;
+    margin-top: 20px;
+    
+}
+.single_recipe h2{
+    margin-bottom: 20px;
+    align-self: center;
+    font-size: 60px;
+}
+.recipe_buttons{
+    justify-items: baseline;
+}
+.recipe_tags {
+    font-weight: bold;
+    font-size: large;
+}
+.comment_box{
+    background-color:#b0b4b6;
+    border-radius: 12px;
+    padding: 10px 20px;
+    align-self: center;
+} 
+.comment_box span{
+    font-style: italic;
+    font-size: small;
+}
+.comment_entry{
+    margin: 10px 10px;
+    border-bottom: none thick green;
+    background-color:#c3c9cb;
+    border-radius: 12px;
+    padding: 10px;
+}
+.comment_area{
+    max-width: 70%;
+    width: 70%;
+}
+.comment_form textarea{
+    max-width: 70%;
+    width: 70%;
+    resize:none;
+}
+.first_comment{
+    margin: 10px 10px;
+    border-bottom: none thick green;
+    background-color:#c3c9cb;
+    border-radius: 12px;
+    padding: 10px;
 }

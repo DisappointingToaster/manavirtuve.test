@@ -5,30 +5,24 @@
 
 <div class="moderation_container">
     <div class="reported">
-        <div class="reported_recipes"> 
-        <table>
-            <tr>
-                <th>Recipe</th>
-                <th>Reason of report</th>
-                <th>Owner</th>
-            </tr>
-            <tr>
-                <td>Test</td>
-                <td>Test reason</td>
-                <td>Test owner</td>
-            </tr>
-        </table>
-        </div>
         <div class="reported_users"> 
             <table>
                 <tr>
                     <th>User</th>
                     <th>Reason of report</th>
                 </tr>
+                @forelse ($reports as $report)
+                    <tr>
+                        <td><a href="/users/{{$report->user->id}}"> {{$report->user->name}}</a></td>
+                        <td>{{$report->reportReason->report_reason}}</td>
+                    </tr>
+                @empty
                 <tr>
-                    <td>Test</td>
-                    <td>Test reason</td>
+                    <td>No user reports</td>
+                    <td></td>
                 </tr>
+                @endforelse
+                
             </table>
         </div>
     </div>

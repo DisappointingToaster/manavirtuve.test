@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->longText('description')->nullable();
-            $table->unsignedBigInteger('recipe_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('recipe_id')->references('id')->on('recipe')->onDelete('cascade');
+            $table->unsignedBigInteger('report_reason_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('report_reason_id')->references('id')->on('report_reasons')->onDelete('set null');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comment');
+        Schema::dropIfExists('reports');
     }
 };
