@@ -25,7 +25,7 @@
                 <p class="login_error">{{$message}}</p>
                 @enderror
             <div class="login_sign">
-                <button>Sign up</button>
+                <button>Sign in</button>
             </div>
             <div class="login_register">
                 <p>Don't have an account?

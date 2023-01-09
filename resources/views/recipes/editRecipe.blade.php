@@ -5,7 +5,7 @@
 
 <div class='single_recipe_display_container'>
         
-        <div class='add_recipe'>
+        <div class='list_ingredients'>
                 
                 <form action="/recipes/{{$recipe->id}}" method="POST" enctype="multipart/form-data">
                         @php
@@ -34,7 +34,7 @@
                                 @empty
                                 <h5>No categories to display</h5>
                                 @endforelse
-                                <textarea name="recipe_description">{{$recipe->description}}</textarea>
+                                <textarea name="recipe_description" class="recipe_description">{{$recipe->description}}</textarea>
                                 <input type="file" name="recipe_image" value="{{$recipe->image_path}}">
                                 <button name="submit" type="submit">Submit</button>
                         </div>

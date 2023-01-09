@@ -5,11 +5,11 @@
 
 <div class='single_recipe_display_container'>
         
-        <div class='add_recipe'>
+        <div class='list_ingredients'>
                 <form action="/recipes" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div>
-                                <input type="text" name="recipe_name" placeholder="Your recipe name" value="{{old('recipe_name')}}">
+                                <input class="recipe_name" type="text" name="recipe_name" placeholder="Your recipe name" value="{{old('recipe_name')}}">
                                 @forelse ($ingredient_categories as $category)
                                 <h5>{{$category->category_name}}</h5>
                                 <ul>
@@ -25,7 +25,7 @@
                                 @empty
                                 <h5>No categories to display</h5>
                                 @endforelse
-                                <textarea name="recipe_description">{{old('recipe_description')}}</textarea>
+                                <textarea name="recipe_description" class="recipe_description" placeholder="Your recipe description">{{old('recipe_description')}}</textarea>
                                 <input type="file" name="recipe_image" value="{{old('recipe_image')}}">
                                 <button name="submit" type="submit">Submit</button>
                         </div>

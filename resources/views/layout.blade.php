@@ -29,7 +29,7 @@
                     <li class="moderation_link"><a href="/moderation">Moderation</a></li>
                     @endif
                     <li ><a href="/profile/info">Profile</a></li>
-                    <li><span class="welcome_message">
+                    <li class="welcome_message"><span >
                         Welcome {{auth()->user()->name}}</span>
                     </li>
                     <li>
