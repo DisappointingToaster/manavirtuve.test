@@ -80,7 +80,7 @@ class user_controller extends Controller
                         'name'=>$formFields['username'],
                         'email'=>$formFields['email'],
                     ]);
-                    return redirect('/profile/userInfo');
+                    return redirect('/profile/info');
                 }
                 return back()->withErrors(['password'=>'Invalid Password']);
             };
@@ -96,7 +96,7 @@ class user_controller extends Controller
                     'name'=>$formFields['username'],
                     'email'=>$formFields['email'],
                 ]);
-                return redirect('/profile/userInfo');
+                return redirect('/profile/info');
             }
             return back()->withErrors(['password'=>'Invalid Password']);
         }
@@ -112,7 +112,7 @@ class user_controller extends Controller
                     'name'=>$formFields['username'],
                     'email'=>$formFields['email'],
                 ]);
-                return redirect('/profile/userInfo');
+                return redirect('/profile/info');
             }
             return back()->withErrors(['password'=>'Invalid Password']);
         }

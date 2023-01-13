@@ -5,7 +5,7 @@
 
 <div class='single_recipe_display_container'>
         
-        <div class='list_ingredients'>
+        <div class='edit_background'>
                 <form action="/recipes" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="edit_recipe_fields">
@@ -15,7 +15,7 @@
                                         <input type="file" name="recipe_image" value="{{old('recipe_image')}}">
                                         <button name="submit" type="submit">Submit</button>
                                 </div>
-                                <div class="listing_box">
+                                <div class="list_ingredients">
                                                 @forelse ($ingredient_categories as $category)
                                         <h5>{{$category->category_name}}</h5>
                                         <ul>

@@ -339,8 +339,8 @@ a.button{
     align-items: center;
     background-image: url("../images/download.jpg");
     background-size: cover;
-    min-width: 100%;
-    min-height: 100%;   
+    min-width: 100vw;
+    min-height: 100vh;   
     width:fit-content;
     height:fit-content;
     
@@ -510,12 +510,15 @@ a.button{
 }
 .list_ingredients{
     width: fit-content;
+    min-width: 25%;
     border-radius: 12px;
     border-color: #bcbfc1;
     border-style: solid;
     background-color:#e5ebee;
     margin: 5px;
     overflow: scroll;
+    padding: 3px;
+    max-height: 90vh;
 }
 .modify_inner_container{
     display: flex;
@@ -770,4 +773,16 @@ a.button{
 .author{
     margin: 15px;
     margin-left: 0;
+}
+.edit_background{
+    background: #e5ebee;
+    border:2px solid#bcbfc1 ;
+    border-radius: 12px;
+    margin-top: 10px;
+    padding: 20px;
+}
+.edit_background input{
+    max-width: 100%;
+    padding: 10px 20px;
+    margin: 5px 0;
 }
