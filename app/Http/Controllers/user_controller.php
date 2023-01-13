@@ -9,55 +9,48 @@ use Illuminate\Support\Facades\Redis;
 
 class user_controller extends Controller
 {
-    //Tiek argriezts registracijas skats
+    //Return user view
     public function register(){
         return view('users.register');
     }
-    //Jauna lietotaja izveide
+    //New user creation
     public function createUser(Request $request){
         //Veikta lauku validacija un custom error pazinojumi
         $formFields=$request->validate([
             'username'=>'required|min:3|unique:users,name',
             'email'=>'required|email|unique:users,email|max:255',
             'password'=>'required|confirmed|min:6'
-        ],[
-            'username.required'=>'Lietotājvārds ir obligāts lauks',
-            'username.min'=>'Lietojvārdam jasatur vismaz 3 simbolus',
-            'username.unique'=>'Lietotājvārds ir aizņemts',
-            'email.required'=>'E-pasts ir obligāts lauks',
-            'email.email'=>'Nederīgs e-pasts',
-            'email.unique'=>'E-pasts ir aizņemts',
-            'email.max'=>'E-pasts pārsniedz 255 simbolus'
         ]);
-        //parole tiek sifreta
+        //password gets encrypted
         $formFields['password']=bcrypt($formFields['password']);
         $user=User::create([
         'name'=>$formFields['username'],
         'email'=>$formFields['email'],
         'password'=>$formFields['password']
         ]);
-        //pec lietotaja izveides tiek autorizets lietotajs
+        //user gets authenticated
         auth()->login($user);
         return redirect('/');
     }
-    //lietotajs atsakas no sistemas
+    //user logs out of the system
     public function logoutUser(Request $request){
         auth()->logout();
-        //sesijas dati tiek aizmirsti un jauns zetons izveidots
+        //session data gets deleted
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
     }
-    //atgriez login skatu
+    //returns login view
     public function login(){
         return view('users.login');
     }
-    //lietotaja pieteiksanas sistema
+    //user logging in to the system
     public function loginUser(Request $request){
         $formFields=$request->validate([
             'email'=>'required|email',
             'password'=>'required'
         ]);
+
         if(auth()->attempt($formFields)){
             $request->session()->regenerate();
 
@@ -65,17 +58,23 @@ class user_controller extends Controller
         }
         return back()->withErrors(['email'=>'Invalid Credentials'])->onlyInput('email');
     }
+    //returns user information update view
     public function update(){
         return view('users.update');
     }
+    //user information update
     public function updateUser(User $user,Request $request){
+        //checks if usernam has changed
         if($user->name!=$request->username){
+            //checks if email has changed
             if($user->email!=$request->email){
+                
                 $formFields=$request->validate([
                     'username'=>'min:3|unique:users,name',
                     'password'=>'required|confirmed|min:6',
                     'email'=>'email|unique:users,email|max:255'
                 ]);
+                //updates username and password
                 if(Hash::check($formFields['password'],$user->password)){
                     $user->update([
                         'name'=>$formFields['username'],
@@ -85,11 +84,13 @@ class user_controller extends Controller
                 }
                 return back()->withErrors(['password'=>'Invalid Password']);
             };
+            
             $formFields=$request->validate([
                 'username'=>'min:3|unique:users,name',
                 'password'=>'required|confirmed|min:6',
             ]);
             $formFields['email']=$user->email;
+            //updates username
             if(Hash::check($formFields['password'],$user->password)){
                 $user->update([
                     'name'=>$formFields['username'],
@@ -99,6 +100,7 @@ class user_controller extends Controller
             }
             return back()->withErrors(['password'=>'Invalid Password']);
         }
+        //if email has changed, only updates email
         if($user->email!=$request->email){
             $formFields=$request->validate([
                 'password'=>'required|confirmed|min:6',

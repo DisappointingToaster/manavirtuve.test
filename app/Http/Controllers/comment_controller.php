@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class comment_controller extends Controller
-{
+{   
+    //creates comment
     public function postComment(Recipes $recipe, Request $request){
         
         if(Auth::check()){
             $formFields=$request->validate([
-                'comment_body'=>'required'
+                'comment_body'=>'required|max:512'
             ]);
             $comment=Comments::create([
                 'description'=>$request['comment_body'],
@@ -27,4 +28,12 @@ class comment_controller extends Controller
         }
         
     }
+    //deletes comment
+    public function deleteComment(Comments $comment, Request $request){
+        
+        $comment->delete();
+        return redirect()->back();
+    }
+
+    
 }

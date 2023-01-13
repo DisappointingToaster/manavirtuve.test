@@ -44,7 +44,7 @@
                 @endforeach
         </div>
     </div>
-    <div>
+    <div class="recently_viewed">
         @if(!$recentlyViewed==null)
             @if(count($recentlyViewed)!=0)
             <h3>Recently viewed recipes</h3>

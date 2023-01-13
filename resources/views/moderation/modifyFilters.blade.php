@@ -31,13 +31,15 @@
                                 </form>
                         </div>
                 </div>
+        </div>
+        
         <div class="list_ingredients">
                 @forelse ($ingredient_categories as $category)
                         <form method="POST" action ="/moderation/category/{{$category->id}}">
                                 @csrf
                                 @method('DELETE')
                                 <span class="modify_category_name"><b>{{$category->category_name}}</b></span>
-                                <button class="delete_button_category">Delete</button>
+                                <button class="delete_button_category" onclick="return confirm('Are you sure you want to delete \'{{$category->category_name}}\'?')">Delete</button>
                         </form>    
                     <ul>
                          @forelse ($category->ingredients as $ingredients)
@@ -46,7 +48,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <span>{{$ingredients->ingredient_name}}</span>
-                                        <button class="delete_button">Delete</button>
+                                        <button class="delete_button" onclick="return confirm('Are you sure you want to delete \'{{$ingredients->ingredient_name}}\'?')">Delete</button>
                                 </form>    
                         </li>
                         @empty
@@ -57,6 +59,5 @@
                     <h5>No ingredients to display</h5>
                 @endforelse    
         </div>
-</div>
 </div>
 @endsection

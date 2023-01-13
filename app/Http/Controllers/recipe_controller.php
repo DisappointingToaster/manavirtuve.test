@@ -28,9 +28,14 @@ class recipe_controller extends Controller
         if(!session()->has('recipe.recently_viewed',$recipe->id)){
             session()->push('recipe.recently_viewed',$recipe->id);
         }
-       
+        if(Auth::user()){
+            $favouritedRecipes=Kitchen::all()->where('user_id','=',auth()->user()->id)->where('recipe_id','=',$recipe->id);
+        }else{
+            $favouritedRecipes=null;
+        }
         return view('recipes.recipe',[
             'recipe'=>$recipe,
+            'favourites'=>$favouritedRecipes
         ]);
     }
     //recipe creation
@@ -49,11 +54,7 @@ class recipe_controller extends Controller
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
-        ],
-        [
-            'recipe_name.required'=>'This field is required'
         ]);
-
 
         $formFields['user_id']=auth()->user()->id;
         if($request->recipe_image!=null){
@@ -85,14 +86,23 @@ class recipe_controller extends Controller
     }
     //admin can add category
     public function createCategory(Request $request){
+        //check if category already exists
+        if(Ingredient_Categories::where('category_name','like',$request->category_name)->exists()){
+            return redirect('/moderation/editFilters')->with('message','Category already exists');
+        };   
         $category=Ingredient_Categories::create([
         'category_name'=>$request->input('category_name')
         ]);
 
         return redirect('/moderation/editFilters')->with('message','Category created');
     }
+
     //admin can add ingredients
     public function createIngredient(Request $request){
+        //check if ingredient already exists
+        if(Ingredients::where('ingredient_name','like',$request->ingredient_name)->exists()){
+            return redirect('/moderation/editFilters')->with('message','Ingredient already exists');
+        }; 
         $ingredient=Ingredients::create([
         'ingredient_name'=>$request->input('ingredient_name'),
         'category_id'=>$request->input('categories')
@@ -102,12 +112,17 @@ class recipe_controller extends Controller
     //return view of recipe edit
     public function editRecipe(Recipes $recipe){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
+        
         return view('recipes.editRecipe',[
             'recipe'=>$recipe
         ])->with('ingredient_categories',$ingredient_categories);
     }
     //post request to update recipe. similar to creation
     public function updateRecipe(Recipes $recipe, Request $request){
+        //checking if recipe owner is current user
+        if($recipe->user_id!=auth()->user()->id){
+            return redirect('/kitchen');
+        }
         //creating a string from array
         $input=$request->all();
         if(!empty($input['tags'])){
@@ -116,16 +131,14 @@ class recipe_controller extends Controller
         }else{
             $tags=null;
         };
+        //validating inputs
         $request->validate([
             'recipe_name'=>'required|max:255',
             'tags'=>'nullable',
             'recipe_description'=>'required|max:4000',
             'recipe_image'=>'nullable|mimes:jpg,png,jpeg|max:5048'
-        ],
-        [
-            'recipe_name.required'=>'Nepieciešams receptes nosaukums'
         ]);
-
+        //updating recipe
         if($request->recipe_image!=null){
             $recipeImageName = time().'-'.$request->recipe_name.'.'. 
             $request->recipe_image->extension();
@@ -146,9 +159,15 @@ class recipe_controller extends Controller
         
         return redirect('/recipes/'.$recipe->id)->with('message','Recipe updated');
     }
-    //
-    public function deleteRecipe(Recipes $recipe){
+    //delete recipe
+    public function deleteRecipe(Recipes $recipe){  
+        //checking recipe ownership
+        if($recipe->user_id!=auth()->user()->id){
+            return redirect('/kitchen');
+        }
+        //removing recipe from session
         session()->forget('recipe.recently_viewed',[$recipe->id]);
+        //deleting recipe
         $imagePath="images/recipes/" . $recipe->image_path;
         if(File::exists($imagePath)) {
             File::delete($imagePath);
@@ -156,15 +175,17 @@ class recipe_controller extends Controller
         $recipe->delete();
         return redirect('/recipes')->with('message','Recipe deleted');
     }
+    //ingredient deletion
     public function deleteIngredient(Ingredients $ingredient){
         $ingredient->delete();
         return redirect()->back()->with('message','Ingredient deleted');
     }
+    //category deletion
     public function deleteCategory(Ingredient_Categories $category){
         $category->delete();
         return redirect()->back()->with('message','Category deleted');
     }
-
+    //returns kitchen view
     public function kitchen(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::all()->where('user_id','=',auth()->user()->id);
@@ -174,17 +195,20 @@ class recipe_controller extends Controller
         ])->with('ingredient_categories',$ingredient_categories)->with('fav_recipes',$favouritedRecipes);
         
     }
-    
+    //user adds recipe
     public function addRecipe(){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         return view('recipes.addRecipe')->with('ingredient_categories',$ingredient_categories);
     }
+    //admin/mod can promote recipe
     public function promoteRecipe(Request $request, Recipes $recipe){
+        //sets recipe to unpromoted
         if($request->promote_button==="false"){
             $recipe->update([
                 'promoted'=>false
             ]);
         }
+        //checks if recipe has ingredient tags. otherwise promotes
         if($recipe->tags===null){
             return back()->with('message','Recipe without tags can\'t be promoted.');
         } else{
@@ -196,13 +220,23 @@ class recipe_controller extends Controller
             return back()->with('message','Recipe set to promoted.');
         }
     }
+    //owner can publish recipe
     public function publishRecipe(Request $request, Recipes $recipe){
+        //check if owner made the request
+        if($recipe->user_id!=auth()->user()->id){
+            return redirect('/kitchen');
+        }
+        if($recipe->forcedHidden==true){
+            return redirect('/kitchen')->with('message', 'Recipe can not be published');
+        }
+        //if recipe is published, set it to false
         if($request->publish_button==="false"){
             $recipe->update([
                 'hidden'=>false
             ]);
             return back()->with('message','Recipe Published.');
         }
+        //if recipe is published, set it to true
         if($request->publish_button==="true"){
                 $recipe->update([
                     'hidden'=>true
@@ -210,6 +244,7 @@ class recipe_controller extends Controller
                 return back()->with('message','Recipe hidden.');
             }
     }
+    //moderator forcefull hiding recipe
     public function forceHide(Recipes $recipe, Request $request){
         if($request->forceHide_button==="false"){
             $recipe->update([
@@ -226,10 +261,13 @@ class recipe_controller extends Controller
                 return back()->with('message','Recipe forced hidden.');
             }
     }
+    //user saving recipes to their kitchen
     public function favouriteRecipe(Recipes $recipe){
+        //checks if recipe is already favourited
         if(Kitchen::where('recipe_id','=',$recipe->id)->where('user_id','=',auth()->user()->id)->exists()){
             return back()->with('message','Can\'t favourite recipe');
         }
+        //checks if user is authenticated, then saves recipe
         if(Auth::check()){
             Kitchen::create([
                 'user_id'=>auth()->user()->id,
@@ -238,11 +276,13 @@ class recipe_controller extends Controller
         return back()->with('message','Recipe favourited');
     }else{
         return back()->with('message','Can\'t favourite recipe');
+    }; 
     }
-        
-    }
+    //user unvaourites their recipe
     public function deleteFavourite(Recipes $recipe){
+        //finds all favourited entries of the recipe
         $kitchen=Kitchen::all()->where('recipe_id','=',$recipe->id)->where('user_id','=',auth()->user()->id);
+        //each of the entries is deleted. This is assuming duplicate ever was made
         $kitchen->each->delete();
         return redirect()->back()->with('message','Recipe unfavourited');
     }

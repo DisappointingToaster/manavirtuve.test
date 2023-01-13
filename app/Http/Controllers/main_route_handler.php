@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class main_route_handler extends Controller
 {
+    //returns home view with promoted/popular/latest recipes
     public function index(){
-        $latestRecipes=Recipes::latest()->limit(5)->get();
-        $popularRecipes=Recipes::all()->sortBy('favourites')->take(5);
+        $latestRecipes=Recipes::latest()->where('hidden','=',false)->limit(5)->get();
+        $popularRecipes=Recipes::all()->where('hidden','=',false)->sortBy('favourites')->take(5);
         $promotedRecipes=Recipes::all()->where('promoted','=',true)->shuffle()->take(3);
         $recentlyViewed=session()->get('recipe.recently_viewed');
         //session()->flush();

@@ -32,7 +32,7 @@ Route::post('/recipes',[recipe_controller::class,'createRecipe'])->middleware('a
 Route::get('/moderation/editFilters',[recipe_controller::class,'modifyFilters'])->middleware('auth','moderation');
 Route::post('/moderation/newCategory',[recipe_controller::class,'createCategory'])->middleware('auth','moderation');
 Route::post('/moderation/newIngredient',[recipe_controller::class,'createIngredient'])->middleware('auth','moderation');
-Route::get('/recipes/{recipe}/edit',[recipe_controller::class,'editRecipe'])->middleware('auth');
+Route::get('/recipes/{recipe}/edit',[recipe_controller::class,'editRecipe'])->middleware('auth','owner');
 Route::put('/recipes/{recipe}',[recipe_controller::class,'updateRecipe'])->middleware('auth');
 Route::delete('/recipes/{recipe}',[recipe_controller::class,'deleteRecipe'])->middleware('auth');
 Route::delete('/moderation/ingredient/{ingredient}',[recipe_controller::class,'deleteIngredient'])->middleware('auth','moderation');
@@ -55,3 +55,5 @@ Route::put('/users/{user}/prohibitComment',[moderation_controller::class,'prohib
 Route::put('/users/{user}/prohibitPost',[moderation_controller::class,'prohibitPost'])->middleware('auth','moderation');
 Route::post('/recipes/{recipe}/favourite',[recipe_controller::class,'favouriteRecipe'])->middleware('auth');
 Route::delete('/recipes/{recipe}/favourite',[recipe_controller::class,'deleteFavourite'])->middleware('auth');
+Route::delete('/comment/{comment}',[comment_controller::class,'deleteComment'])->middleware('auth');
+Route::delete('/report/{report}',[moderation_controller::class,'deleteReport'])->middleware('auth','moderation');
