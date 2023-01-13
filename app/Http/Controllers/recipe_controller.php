@@ -16,7 +16,7 @@ class recipe_controller extends Controller
     public function recipes(Request $request){
         $ingredient_categories=Ingredient_Categories::all()->sortBy('category_name');
         $recipes=Recipes::latest()->where('hidden','=',false)->filter
-            (request(['search','category']))->get();
+            (request(['category','searchName']))->get();
         return view('recipes.recipes',[
             'recipes'=>$recipes,
         ])->with('ingredient_categories',$ingredient_categories);

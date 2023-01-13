@@ -22,9 +22,9 @@ class Recipes extends Model
      );
      //this is what actually filters on query request
     public function scopeFilter($query, array $filters){
-        if($filters['search']??false){
-            $query->where('name','like','%'.request('search').'%')
-            ->orWhere('description','like','%'.request('search').'%');
+        if($filters['searchName']??false){
+            $query->where('name','like','%'.request('searchName').'%')
+            ->orWhere('description','like','%'.request('searchName').'%');
         };
         
         if($filters['category']??false){
@@ -35,6 +35,10 @@ class Recipes extends Model
                       $query2->where('tags', 'like',  '%' . $tags [$i] .'%');
                 }
             });
+            if($filters['searchName']??false){
+                $query->where('name','like','%'.request('searchName').'%')
+                ->orWhere('description','like','%'.request('searchName').'%');
+            }
         };
     }
     //setting relationships

@@ -5,22 +5,16 @@
 
 <div class='recipe_browser'>
     <div class='search_box'>
-        <div>
-            <form role="search">
-                <div class="input-group">
-                    <form action="/recipes">
-                        <input type="text" placeholder="Search your recipe" class="" name="search" />
-                        <button class="submit_button" type="submit">Submit</button>
-                    </form>
-                </div>
-            </form>
-        </div>
+        
         @if(count($ingredient_categories)!=0)
         <div class="filter_list">
             <form>
+            
+            <input type="text" placeholder="Search your recipe" class="" name="searchName" />
             <button class="submit-button" type="submit">Submit</button>
             @forelse ($ingredient_categories as $category)
-                <h5>{{$category->category_name}}</h5>
+                
+            <h5>{{$category->category_name}}</h5>
                 <ul>
                      @forelse ($category->ingredients as $ingredients)
                         @php
